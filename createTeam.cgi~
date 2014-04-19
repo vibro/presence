@@ -1,0 +1,32 @@
+#!/usr/local/bin/python2.7
+
+import sys
+import cgi
+#import insert_actors
+import cgi_utils_sda
+import cgitb; cgitb.enable()
+
+
+def main():
+  # Conditionals that determine what action to take
+  #cgi.test()
+  global form_data
+  form_data = cgi.FieldStorage()
+  
+
+  if not(form_data.getfirst("actornm") == None and form_data.getfirst("actorname") == None):
+     insert_actors.on_submit(form_data)
+   # On submit, run this method defined in python
+
+def createTeam():
+    print form_data
+   
+ 
+ 
+
+
+if __name__ == "__main__":
+    print "Content-type: text/html\n"
+    main()
+    tmpl = cgi_utils_sda.file_contents("createTeam.html")
+    print(tmpl)
