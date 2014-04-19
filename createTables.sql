@@ -1,26 +1,29 @@
+drop table if exists user;
 create table user(
 	UID 	integer auto_increment primary key,
 	email 	varchar(30),
 	name 	varchar(30),
 	dob 	date,
-	phnum char(11),
+	phnum	char(11),
 	nickname varchar(30)
 );
 
+drop table if exists userpass;
 create table userpass(
        id       int primary key,
        password char(15),   
-       primary key (id),
        foreign key (id) references user(UID)
 );
 
+drop table if exists team;
 create table team(
 	TID integer auto_increment primary key,
 	name varchar(50),
 	manager integer,
-	location varchar(50),
+	location varchar(50)
 );
 
+drop table if exists player;
 create table player(
 	PID 	integer,
 	team 	integer,
@@ -30,6 +33,7 @@ create table player(
 	foreign key (team) references team(TID)
 );
 
+drop table if exists coach;
 create table coach(
 	CID 	integer,
 	team 	integer,
@@ -38,6 +42,8 @@ create table coach(
 	foreign key (team) references team(TID)
 );
 
+
+drop table if exists event;
 create table event(
 	EID  	integer auto_increment primary key,
 	host 	integer,
@@ -45,6 +51,8 @@ create table event(
 	foreign key (host) references team(TID)
 );
 
+
+drop table if exists attend;
 create table attend(
 	EID	integer,
 	UID	integer,
@@ -52,4 +60,3 @@ create table attend(
 	foreign key (EID) references event(EID),
 	foreign key (UID) references user(UID)
 );
-
