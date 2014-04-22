@@ -1,0 +1,37 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML lang="en">
+  <head>
+    <link href='http://fonts.googleapis.com/css?family=Voltaire' rel='stylesheet' type='text/css'>
+    <title>Create An Event</title>
+    <link rel="stylesheet" type="text/css" href="hwk5.css">
+  </head>
+
+  <body>
+
+
+
+
+  <h1>Create An Event</h1>
+  
+
+  <p> Create an event on Presence for your team. </p>
+
+<!-- REMEMBER TO CHANGE THIS TO THE RIGHT LINK-->   
+    <form method=post action="../cgi-bin/createEvent.cgi">
+
+      <fieldset>
+	<legend><span>Create an Event</span></legend>
+	<table>
+	  <tr><td>Hosting Team ID:</label></td><td><input type="text" name="hostID"></td></tr>
+	  <tr><td>Date:</label></td><td><input type="text" name="event_date" value="today"></td></tr>
+	  <tr><td>Location:</label></td><td><input type="text" name="event_loc" value="Munger Meadow"></td></tr>
+	</table>
+      </fieldset>
+      <p>
+	<input type='reset' value='Reset'>
+	<input type='button' value='New Form' onClick="window.location='createEvent.cgi'">
+	<input type='submit' name='submit' value='Add Data'>
+    </form>
+
+    </body>
+</html>

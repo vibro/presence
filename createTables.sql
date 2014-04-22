@@ -43,13 +43,17 @@ create table coach(
 );
 
 
+-- edited by Lulu on 21 April
 drop table if exists event;
 create table event(
 	EID  	integer auto_increment primary key,
-	host 	integer,
-
-	foreign key (host) references team(TID)
+	host_id	integer,
+	location varchar(50),
+	event_date date,
+	foreign key (host_id) references team(TID)
 );
+
+
 
 
 drop table if exists attend;

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+#A series of commands that copies from the public_html/presence folder to the cgi-bin
+# so that every update I do I won't have to type out like 5000 commands
+
+cp /students/hye/public_html/presence/createTeam.cgi /students/hye/public_html/cgi-bin/createTeam.cgi
+cp /students/hye/public_html/presence/createTeam.py /students/hye/public_html/cgi-bin/createTeam.py
