@@ -3,11 +3,13 @@
 ''' This module consists of Presence helper functions to create an event.
  May be merged with other modules later. 
 
+Currently connected to hye database due to some tabular differences between my tables and rugsbee
+
 Created by Lulu Ye - 21 April 2014'''
 
 
 import MySQLdb
-from lu_db import DSN # change later, right now edited the .sql file to have more
+from hye_db import DSN #change later to rugsbee_dsn
 import dbconn
 import cgi
 import cgi_utils_sda
@@ -25,8 +27,8 @@ def submit(form_data):
 
     # Retrieve and escape the necessary data to insert into the database
     host = form_data.getfirst("hostID")
-    date = form_data.getfirst("event_date")
-    location = form_data.getfirst("event_loc") #needs escaping?
+    date = form_data.getfirst("event_date") #refine later to date
+    location = cgi.escape(form_data.getfirst("event_loc")) #needs escaping?
 
     createEvent(host,date,location)
     
@@ -34,13 +36,13 @@ def submit(form_data):
 ''' Creates an event by executing a SQL insert statement.'''
 def createEvent(host,date,location):
     global curs
-    curs.execute('INSERT INTO event(location) VALUES(%s)',(location,)) #arrrrrrrrrrrgh not working
-    print ("<p>Your event has been created")
+    curs.execute('INSERT INTO event(host_id, event_date, location) VALUES(%s,%s,%s)',(host,date,location)) #refine later
+    print ("<p>Your event on " + date + " at " + location + " has been created")
 
 
 ''' Creates a database connection. '''
 def connect():
-    DSN['database']= 'hye_db' #change later to rugsbee
+    DSN['database']= 'hye_db' #change later to rugsbee_db
     conn = dbconn.connect(DSN)
     conn.autocommit(True)
     return conn
