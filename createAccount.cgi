@@ -4,8 +4,6 @@ import sys
 import cgi
 import cgi_utils_sda
 import cgitb; cgitb.enable()
-
-#sys.path.append('/presence')
 import createAccount
 
 
