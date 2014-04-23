@@ -9,7 +9,7 @@ Created by Lulu Ye - 21 April 2014'''
 
 
 import MySQLdb
-from hye_db import DSN #change later to rugsbee_dsn
+from lu_db import DSN #change later to rugsbee_dsn
 import dbconn
 import cgi
 import cgi_utils_sda
@@ -28,7 +28,10 @@ def submit(form_data):
     # Retrieve and escape the necessary data to insert into the database
     host = form_data.getfirst("hostID")
     date = form_data.getfirst("event_date") #refine later to date
-    location = cgi.escape(form_data.getfirst("event_loc")) #needs escaping?
+    location = form_data.getfirst("event_loc") #needs escaping?
+
+    # You'll want to insert some checks here before running the actual create event. 
+    # Checks include that the information is provided and that a duplicate event doesn't exist
 
     createEvent(host,date,location)
     
