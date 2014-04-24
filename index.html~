@@ -21,7 +21,7 @@
       <fieldset>
 	<legend><span>Create A Team</span></legend>
 	<table>
-	  <tr><td>Team Manager:</label></td><td><input type="text" name="teamManager" value="you"></td></tr>
+	  <tr><td>Team Manager:</label></td><td><input type="text" name="teamManager"></td></tr>
 	  <tr><td>Team Name:</label></td><td><input type="text" name="teamName" value="Rugsbee"></td></tr>
 	  <tr><td>Location:</label></td><td><input type="text" name="location" value="Wellesley" ></td></tr>
 	</table>

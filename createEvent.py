@@ -19,7 +19,6 @@ global curs #declaring global
 
 ''' Called on submit '''
 def submit(form_data):
-    print "submit method in createEvent.py"
     #connect to the database
     global conn, curs
     conn = connect()
@@ -40,7 +39,8 @@ def submit(form_data):
 def createEvent(host,date,location):
     global curs
     curs.execute('INSERT INTO event(host_id, event_date, location) VALUES(%s,%s,%s)',(host,date,location)) #refine later
-    print ("<p>Your event on " + date + " at " + location + " has been created")
+    if (date != None and location != None):
+        print ("<p>Your event on " + date + " at " + location + " has been created")
 
 
 ''' Creates a database connection. '''

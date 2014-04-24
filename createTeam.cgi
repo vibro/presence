@@ -7,6 +7,12 @@ import cgi_utils_sda
 import cgitb; cgitb.enable()
 
 
+
+'''Method that prints out the appropriate webpage'''
+def render_webpage(template,string):
+    str = cgi_utils_sda.file_contents(template) 
+    return str.format(string=string)
+
 def main():
   # Conditionals that determine what action to take
   #cgi.test()
@@ -18,5 +24,5 @@ def main():
 if __name__ == "__main__":
     print "Content-type: text/html\n"
     main()
-#    tmpl = cgi_utils_sda.file_contents("~hye/public_html/presence/createTeam.html")
-#    print(tmpl)
+
+    print render_webpage('createTeam.html',"")
