@@ -1,0 +1,39 @@
+<!doctype html>
+<HTML lang="en">
+<head>
+    <meta charset="utf8">
+    <meta name=author content="Tori Brown">
+    <title>Add members to Team</title>
+</head>
+<body>
+ 
+<h1>Add members to your team!</h1>
+ 
+<p>{string}
+<p>Add a player to your team by inputting your team id and the player's email.
+<form method="GET" action="addMember.cgi">
+
+  <fieldset>
+    <legend>User Info</legend>
+    <table>
+      <tr><td>Team ID<input type="text" name="tid"></td></tr>
+      
+      <tr><td>Email<input type="text" name="email" value="tori@email.com"></td></tr>
+      <tr><td>Type
+    
+	  <select name="type">
+	    <option value="player">Player</option>
+	    <option value="coach">Coach</option>
+	    <option value="manager">Team Manager</option>
+	  </select>
+	  </td></tr>
+    </table>
+  </fieldset>
+  
+
+  <input type="submit" value="submit">
+  
+</form>  
+ 
+</body>
+</html>
