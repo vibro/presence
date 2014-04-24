@@ -5,7 +5,7 @@
 
 Currently connected to hye database due to some tabular differences between my tables and rugsbee
 
-Created by Lulu Ye - 21 April 2014'''
+Created by Lulu Ye - April 2014'''
 
 
 import MySQLdb
@@ -19,19 +19,26 @@ global curs #declaring global
 
 ''' Called on submit '''
 def submit(form_data):
-    print "submit method in createEvent.py"
     #connect to the database
     global conn, curs
     conn = connect()
     curs = conn.cursor(MySQLdb.cursors.DictCursor)
 
-    # Retrieve and escape the necessary data to insert into the database
-    host = form_data.getfirst("hostID")
-    date = form_data.getfirst("event_date") #refine later to date
-    location = form_data.getfirst("event_loc") #needs escaping?
-
     # You'll want to insert some checks here before running the actual create event. 
     # Checks include that the information is provided and that a duplicate event doesn't exist
+
+    # Retrieve and escape the necessary data to insert into the database
+    host = form_data.getfirst("hostID")
+    
+    
+    location = form_data.getfirst("event_loc") #needs escaping?
+
+    date = form_data.getfirst("event_date") #refine later to date
+
+    #put this into the date format that SQL understands
+    month = form_data.getfirst("month")
+    day = form_data.getfirst("day")
+    year = form_data.getfirst("year")
 
     createEvent(host,date,location)
     
@@ -40,7 +47,8 @@ def submit(form_data):
 def createEvent(host,date,location):
     global curs
     curs.execute('INSERT INTO event(host_id, event_date, location) VALUES(%s,%s,%s)',(host,date,location)) #refine later
-    print ("<p>Your event on " + date + " at " + location + " has been created")
+    if (date != None and location != None):
+        print ("<p>Your event on " + date + " at " + location + " has been created")
 
 
 ''' Creates a database connection. '''

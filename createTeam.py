@@ -19,7 +19,7 @@ global curs #declaring global
 
 ''' Called on submit '''
 def submit(form_data):
-    print "submit method in createTeam.py"
+#    print "submit method in createTeam.py"
     #connect to the database
     global conn, curs
     conn = connect()
@@ -27,8 +27,8 @@ def submit(form_data):
 
     # Retrieve and escape the necessary data to insert into the database
     manager = form_data.getfirst("teamManager")
-    name = cgi.escape(form_data.getfirst("teamName")) #escape
-    location = cgi.escape(form_data.getfirst("location")) #escape
+    name = form_data.getfirst("teamName") #needs escape
+    location = form_data.getfirst("location") #needs escape
     
 
     createTeam(manager,name,location)
@@ -38,8 +38,10 @@ def submit(form_data):
 def createTeam(manager,name,loc):
     global curs
     curs.execute('INSERT INTO team(manager,name, location) VALUES(%s,%s,%s)',(manager, name, loc))
-    print ("<p>Your team <em>" + name + "</em> has been created")
-
+    
+    if (name != None):
+        print ("<p>Your team <em>" + name + "</em> has been created")
+        
 
 ''' Creates a database connection. '''
 def connect():

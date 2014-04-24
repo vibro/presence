@@ -5,6 +5,8 @@
 
 cp -p /students/hye/public_html/presence/createTeam.cgi /students/hye/public_html/cgi-bin/createTeam.cgi
 cp -p /students/hye/public_html/presence/createTeam.py /students/hye/public_html/cgi-bin/createTeam.py
+cp -p /students/hye/public_html/presence/createTeam.html /students/hye/public_html/cgi-bin/createTeam.html
 
 cp -p /students/hye/public_html/presence/createEvent.cgi /students/hye/public_html/cgi-bin/createEvent.cgi
 cp -p /students/hye/public_html/presence/createEvent.py /students/hye/public_html/cgi-bin/createEvent.py
+cp -p /students/hye/public_html/presence/createEvent.html /students/hye/public_html/cgi-bin/createEvent.html
