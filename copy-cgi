@@ -13,4 +13,6 @@ cp -p addMember.cgi ../.
 cp -p addMember.py ../.
 
 cp -p dbconn.py ../.
-cp -p rugsbee_dsn ../.
+cp -p rugsbee_dsn.py ../.
+
+cp -p update-cgi ../.
