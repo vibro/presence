@@ -7,7 +7,7 @@ Created by Tori Brown - 21 April 2014'''
 
 
 import MySQLdb
-from vbrown_dsn import DSN # change later
+from rugsbee_dsn import DSN # change later
 import dbconn
 import cgi
 import cgi_utils_sda
@@ -100,7 +100,7 @@ def retrieveUser(UID):
 
 ''' Creates a database connection. '''
 def connect():
-    DSN['database']= 'vbrown_db' #change later to rugsbee
+    DSN['database']= 'rugsbee_db' #change later to rugsbee
     conn = dbconn.connect(DSN)
     conn.autocommit(True)
     return conn

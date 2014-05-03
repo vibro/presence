@@ -9,7 +9,7 @@ Created by Lulu Ye - April 2014'''
 
 
 import MySQLdb
-from lu_db import DSN #change later to rugsbee_dsn
+from rugsbee_dsn import DSN #change later to rugsbee_dsn
 import dbconn
 import cgi
 import cgi_utils_sda
@@ -53,7 +53,7 @@ def createEvent(host,date,location):
 
 ''' Creates a database connection. '''
 def connect():
-    DSN['database']= 'hye_db' #change later to rugsbee_db
+    DSN['database']= 'rugsbee_db' #change later to rugsbee_db
     conn = dbconn.connect(DSN)
     conn.autocommit(True)
     return conn
