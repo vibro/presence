@@ -16,3 +16,6 @@ cp -p dbconn.py ../.
 cp -p rugsbee_dsn.py ../.
 
 cp -p update-presence ../.
+
+chmod a+r *.cgi
+chmod og-w *.cgi
