@@ -39,8 +39,16 @@ def submit(form_data):
     month = form_data.getfirst("month")
     day = form_data.getfirst("day")
     year = form_data.getfirst("year")
+    sql_date = "" #initialize to empty
 
-    createEvent(host,date,location)
+
+    if (month != None and day != None and year != None):
+        sql_date = year+ "-" + month + "-" + day
+        #print sql_date
+
+
+        #creates the event, even if the sql_date is empty
+    createEvent(host,sql_date,location)
     
     
 ''' Creates an event by executing a SQL insert statement.'''

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cp -p createTeam.cg presence/.
+cp -p createTeam.cgi presence/.
 cp -p createTeam.py presence/.
 
 cp -p createEvent.cgi presence/.
@@ -11,5 +11,3 @@ cp -p createAccount.py presence/.
 
 cp -p addMember.cgi presence/.
 cp -p addMember.py presence/.
-
-
