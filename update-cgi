@@ -1,12 +1,15 @@
 #!/bin/bash
 
-#A series of commands that copies from the public_html/presence folder to the cgi-bin
-# so that every update I do I won't have to type out like 5000 commands
+cp -p createTeam.cg presence/.
+cp -p createTeam.py presence/.
 
-cp -p /students/hye/public_html/presence/createTeam.cgi /students/hye/public_html/cgi-bin/createTeam.cgi
-cp -p /students/hye/public_html/presence/createTeam.py /students/hye/public_html/cgi-bin/createTeam.py
-cp -p /students/hye/public_html/presence/createTeam.html /students/hye/public_html/cgi-bin/createTeam.html
+cp -p createEvent.cgi presence/.
+cp -p createEvent.py presence/.
 
-cp -p /students/hye/public_html/presence/createEvent.cgi /students/hye/public_html/cgi-bin/createEvent.cgi
-cp -p /students/hye/public_html/presence/createEvent.py /students/hye/public_html/cgi-bin/createEvent.py
-cp -p /students/hye/public_html/presence/createEvent.html /students/hye/public_html/cgi-bin/createEvent.html
+cp -p createAccount.cgi presence/.
+cp -p createAccount.py presence/.
+
+cp -p addMember.cgi presence/.
+cp -p addMember.py presence/.
+
+
