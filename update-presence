@@ -1,0 +1,15 @@
+#!/bin/bash
+
+cp -p createTeam.cgi presence/.
+cp -p createTeam.py presence/.
+
+cp -p createEvent.cgi presence/.
+cp -p createEvent.py presence/.
+
+cp -p createAccount.cgi presence/.
+cp -p createAccount.py presence/.
+
+cp -p addMember.cgi presence/.
+cp -p addMember.py presence/.
+
+
