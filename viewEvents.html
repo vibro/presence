@@ -1,0 +1,46 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML lang="en">
+  <head>
+    <link href='./presence/css/bootstrap.css' rel='stylesheet' type='text/css'>
+    <title>View an Event</title>
+  </head>
+
+  <body>
+
+
+<div class="container">
+
+  <h1>View Events</h1>
+  
+
+  <p class="lead"> View the events that from a team perspective or a user perspective. Select whether you are a team or a user, input your ID, and hit submit. </p>
+
+<!-- REMEMBER TO CHANGE THIS TO THE RIGHT LINK-->   
+    <form method=GET action="viewEvents.cgi">
+
+      <fieldset>
+	<legend><span>View Events</span></legend>
+	<select required name="view">
+	  <option value="user"> User </option>
+	  <option value="team"> Team </option>
+	</select>
+	<table>
+	  <tr><td>ID:</label></td><td><input type="text" name="ID" value="1"></td></tr>
+	</table>
+      </fieldset>
+      <p>
+	<!-- <input type='button' value='New Form' onClick="window.location='viewEvents.cgi'"> -->
+	<input type='submit' name='submit' value='Find Events'>
+    </form>
+
+<div class="container" id="events">
+
+{response}
+
+
+<!-- return the data here!-->
+</div>
+
+</div> <!-- /.container -->
+    </body>
+</html>

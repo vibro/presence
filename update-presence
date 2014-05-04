@@ -12,4 +12,6 @@ cp -p createAccount.py presence/.
 cp -p addMember.cgi presence/.
 cp -p addMember.py presence/.
 
+cp -p viewEvents.cgi presence/.
+cp -p viewEvents.py presence/.
 
