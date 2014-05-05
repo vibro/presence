@@ -2,7 +2,7 @@
 
 
 ''' This module consists of Presence helper functions to view events in the database.
- May be merged with other modules later. 
+May be merged with other modules later. 
 
 Created by Lulu Ye - May 2014'''
 
@@ -47,14 +47,13 @@ def getEvent(id,view):
     #team event query - set as default
         curs.execute('SELECT * FROM event WHERE host_id = %s', (id,))
 
-
-    # HTML Formatting below 
-    header = "<div class=\"container\"><h2> Events for " + view + " no. " + str(id) +  "</h2> \n <hr>"
+        # HTML Formatting below 
+    header = "<div class=\"container\"><h2> Events for " + str(view) + " no. " + str(id) +  "</h2> \n <hr>"
     tableHead = "<table class=\"table table-striped\"> <tr> \n <th> host_id </th> \n <th> location </th> \n </tr>"
     tableEnd = "</table></div>"
 
-    lines = []
-    
+    lines = []    
+
     while True:
         row = curs.fetchone()
         #print "<p>curs.fetchone: " #debugging
