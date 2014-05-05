@@ -19,5 +19,8 @@ cp -p addMember.py ../.
 cp -p dbconn.py ../.
 cp -p rugsbee_dsn.py ../.
 
+cp -p viewEvents.cgi ../.
+cp -p viewEvents.py ../.
+
 cp -p update-presence ../.
 

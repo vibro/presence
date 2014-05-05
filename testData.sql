@@ -10,9 +10,9 @@ DELETE from player;
 
 
 -- create some users
-INSERT INTO user(email, name, dob, nickname) VALUES ("harry@hogwarts.com", "Harry Potter", 31-07-1980, "The Chosen One");
-INSERT INTO user(email, name, dob, nickname) VALUES ("ronald@hogwarts.com", "Ron Weasley", 01-03-1980, "Won Won");
-INSERT INTO user(email, name, dob, nickname) VALUES ("hermione@hogwarts.com", "Hermione Granger", 15-09-1979, "Hermy");
+INSERT INTO user(email, name, dob, nickname) VALUES ("harry@hogwarts.com", "Harry Potter", 1980-07-31, "The Chosen One");
+INSERT INTO user(email, name, dob, nickname) VALUES ("ronald@hogwarts.com", "Ron Weasley", 1980-03-01, "Won Won");
+INSERT INTO user(email, name, dob, nickname) VALUES ("hermione@hogwarts.com", "Hermione Granger", 1979-09-17, "Hermy");
 
 -- create a team
 -- INSERT INTO team(name, location) VALUES("Rugsbee", "Wellesley");
@@ -27,3 +27,7 @@ INSERT INTO player(PID, team, position) VALUES(3, 1, "Chaser"); -- Hermione
 
 -- create event
 INSERT INTO event(host_id, location) VALUES(1, "Astronomy Tower"); -- hopefully hosted by Hogwarts
+
+-- attend events
+INSERT INTO attend(EID,UID) VALUES(1, 1); -- Harry goes to practice at astronomy tower
+INSERT INTO attend(EID,UID) VALUES(1, 2); -- Ron goes to practice at astronomy tower
