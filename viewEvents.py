@@ -18,7 +18,7 @@ global curs #declaring global
 
 ''' Called on submit '''
 def submit(form_data):
-#    print "submit method in createTeam.py"
+    #print "submit method in createTeam.py"
     #connect to the database
     global conn, curs
     conn = connect()
@@ -29,34 +29,45 @@ def submit(form_data):
     id = form_data.getfirst("ID")
     
     # print "view: " + view +", " + id #debugging ometimes doesn't work if id is empty
-    return getEvent(id,view)
+    return getEvent(str(id),view)
 
 
 # Fetches the events of a given team
 def getEvent(id,view):
     global curs
     
-    print "right outside of checking for view" #debugging
+    #print "<p> right outside of checking for view: " #debugging
+    #print view #debugging
     #user event query
     if (view == "user"):
-        # print "hello! Querying for user events for id No. " + id #debugging
+        #print "<p>hello! Querying for user events for id No. " + id #debugging
+        curs.execute('SELECT * FROM event,(SELECT * FROM attend WHERE UID = %s) as userEv where userEv.EID = event.EID', (id,))
 
-        # actually might be more complicated since we want the events - double check that this is working, because it is not
-        curs.execute('SELECT * FROM event,(SELECT * FROM attend WHERE UID = 1) as userEv where userEv.EID = event.EID', (id,))
     else:
-    #team event query
+    #team event query - set as default
         curs.execute('SELECT * FROM event WHERE host_id = %s', (id,))
-    
-    lines=[]
+
+
+    # HTML Formatting below 
+    header = "<div class=\"container\"><h2> Events for " + view + " no. " + str(id) +  "</h2> \n <hr>"
+    tableHead = "<table class=\"table table-striped\"> <tr> \n <th> host_id </th> \n <th> location </th> \n </tr>"
+    tableEnd = "</table></div>"
+
+    lines = []
     
     while True:
         row = curs.fetchone()
-        # print "curs.fetchone: " #debugging
-        print row #debugging
+        #print "<p>curs.fetchone: " #debugging
+        #print row #debugging
+
+        '''Advanced functionality of this would include using JSON to provide a sortable view of the events. We can implement this
+        In the future.'''
+        
         if row == None:
             # print "<h2> Events </h2>" + "\n".join(lines) #debugging 
-            return "<h2> Events </h2> \n <ul>" + "\n".join(lines) + "\n </ul>"
-        lines.append('<li> ' + row.get('location'))
+            return header + tableHead + "\n".join(lines) + tableEnd
+        lines.append("<tr>" + "<td>" +  str(row.get('host_id')) + "</td>")
+        lines.append("<td>" + row.get('location') + "</td>" + "</tr>")
         # print lines #debugging
         
 
