@@ -5,7 +5,7 @@ import cgi
 import createTeam
 import cgi_utils_sda
 import cgitb; cgitb.enable()
-import functions
+
 
 
 '''Method that prints out the appropriate webpage'''
@@ -18,7 +18,7 @@ def main():
   #cgi.test()
   global form_data
   form_data = cgi.FieldStorage()
-  functions.submitCreateTeam(form_data) #creates a team
+  createTeam.submit(form_data) #creates a team
 
 
 if __name__ == "__main__":

@@ -5,7 +5,6 @@ import cgi
 import viewTeams #PROBABLY WILL CHANGE THIS
 import cgi_utils_sda
 import cgitb; cgitb.enable()
-import functions
 
 
 
@@ -19,7 +18,7 @@ def main():
   #cgi.test()
   global form_data
   form_data = cgi.FieldStorage()
-  return functions.submitViewTeams(form_data) #returns an html representation of the events
+  return viewTeams.submit(form_data) #returns an html representation of the events
 
 
 if __name__ == "__main__":
