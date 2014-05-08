@@ -152,6 +152,33 @@ def createEvent(host,date,location):
     if (date != None and location != None):
         print ("<p>Your event on " + date + " at " + location + " has been created")
 
+''' Imported from createTeam.py '''
+''' Called on submit '''
+def submitCreateTeam(form_data):
+#    print "submit method in createTeam.py"
+    #connect to the database
+    global conn, curs
+    conn = connect()
+    curs = conn.cursor(MySQLdb.cursors.DictCursor)
+
+    # Retrieve and escape the necessary data to insert into the database
+    manager = form_data.getfirst("teamManager")
+    name = form_data.getfirst("teamName") #needs escape
+    location = form_data.getfirst("location") #needs escape
+    
+
+    createTeam(manager,name,location)
+    
+    
+''' Creates a team by executing a SQL insert statement.'''
+def createTeam(manager,name,loc):
+    global curs
+    curs.execute('INSERT INTO team(manager,name, location) VALUES(%s,%s,%s)',(manager, name, loc))
+    
+    if (name != None):
+        print ("<p>Your team <em>" + name + "</em> has been created")
+
+
 ''' Imported from viewEvents.py '''
 ''' Called on submit '''
 def submitViewEvents(form_data):
