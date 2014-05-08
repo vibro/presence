@@ -18,4 +18,9 @@ cp -p viewEvents.py presence/.
 cp -p viewTeams.cgi presence/.
 cp -p viewTeams.py presence/.
 
+cp -p viewRoster.cgi presence/.
+cp -p viewRoster.py presence/.
+
+
+
 
