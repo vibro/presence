@@ -4,6 +4,7 @@ import cgi
 import createEvent
 import cgi_utils_sda
 import cgitb; cgitb.enable()
+import functions
 
 
 
@@ -17,7 +18,7 @@ def main():
   #cgi.test()
   global form_data
   form_data = cgi.FieldStorage()
-  createEvent.submit(form_data) #creates an event for a team
+  functions.submitCreateEvent(form_data) #creates an event for a team
 
 
 if __name__ == "__main__":

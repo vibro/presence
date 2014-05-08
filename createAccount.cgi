@@ -5,7 +5,7 @@ import cgi
 import cgi_utils_sda
 import cgitb; cgitb.enable()
 import createAccount
-
+import functions
 
 def render_webpage(template,string):
     str = cgi_utils_sda.file_contents(template)
@@ -15,7 +15,7 @@ def render_webpage(template,string):
 if __name__ == "__main__":
     print "Content-type: text/html\n"
     form_data = cgi.FieldStorage()
-    createAccount.submit(form_data) #creates an event for a team
+    functions.submitCreateAccountform_data) #creates an event for a team
     
     print render_webpage('presence/createAccount.html',"")
     

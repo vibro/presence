@@ -28,6 +28,7 @@ cp -p viewTeams.py ../.
 cp -p viewRoster.cgi ../.
 cp -p viewRoster.py ../.
 
+cp -p functions.py ../.
 
 cp -p update-presence ../.
 
