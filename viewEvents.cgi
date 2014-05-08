@@ -5,6 +5,7 @@ import cgi
 import viewEvents
 import cgi_utils_sda
 import cgitb; cgitb.enable()
+import functions
 
 
 
@@ -18,7 +19,7 @@ def main():
   #cgi.test()
   global form_data
   form_data = cgi.FieldStorage()
-  return viewEvents.submit(form_data) #returns an html representation of the events
+  return functions.submitViewEvents(form_data) #returns an html representation of the events
 
 
 if __name__ == "__main__":
