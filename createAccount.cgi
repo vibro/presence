@@ -15,7 +15,7 @@ def render_webpage(template,string):
 if __name__ == "__main__":
     print "Content-type: text/html\n"
     form_data = cgi.FieldStorage()
-    functions.submitCreateAccountform_data) #creates an event for a team
+    functions.submitCreateAccount(form_data) #creates an event for a team
     
     print render_webpage('presence/createAccount.html',"")
     
