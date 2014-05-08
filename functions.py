@@ -279,7 +279,6 @@ def getRoster(id):
         
 ''' Imported from viewTeams.py '''
 ''' Called on submit '''
-def submit(form_data):
     #print "submit method in createTeam.py"
     #connect to the database
     global conn, curs
