@@ -15,3 +15,7 @@ cp -p addMember.py presence/.
 cp -p viewEvents.cgi presence/.
 cp -p viewEvents.py presence/.
 
+cp -p viewTeams.cgi presence/.
+cp -p viewTeams.py presence/.
+
+
