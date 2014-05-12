@@ -50,6 +50,7 @@ create table event(
 	host_id	integer,
 	location varchar(50),
 	event_date date,
+	event_name 	varchar(50),
 	foreign key (host_id) references team(TID)
 );
 
@@ -60,6 +61,7 @@ drop table if exists attend;
 create table attend(
 	EID	integer,
 	UID	integer,
+	status enum('y','n','m'),
 	
 	foreign key (EID) references event(EID),
 	foreign key (UID) references user(UID)
