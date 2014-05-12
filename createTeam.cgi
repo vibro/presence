@@ -25,4 +25,4 @@ if __name__ == "__main__":
     print "Content-type: text/html\n"
     main()
 
-    print render_webpage('presence/createTeam.html',"")
+    print render_webpage('createTeam.html',"")

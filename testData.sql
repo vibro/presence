@@ -9,10 +9,17 @@ DELETE from team;
 DELETE from player;
 
 
--- create some users
+-- create some users and add passwords to database
 INSERT INTO user(email, name, dob, nickname) VALUES ("harry@hogwarts.com", "Harry Potter", 1980-07-31, "The Chosen One");
+INSERT INTO userpass(id,password) VALUES (last_insert_id(),password('hedwig'));
+
 INSERT INTO user(email, name, dob, nickname) VALUES ("ronald@hogwarts.com", "Ron Weasley", 1980-03-01, "Won Won");
+INSERT INTO userpass(id,password) VALUES (last_insert_id(),password('scabbers'));
+
 INSERT INTO user(email, name, dob, nickname) VALUES ("hermione@hogwarts.com", "Hermione Granger", 1979-09-17, "Hermy");
+INSERT INTO userpass(id,password) VALUES (last_insert_id(),password('crookshanks'));
+
+
 
 -- create a team
 -- INSERT INTO team(name, location) VALUES("Rugsbee", "Wellesley");
@@ -26,8 +33,8 @@ INSERT INTO player(PID, team, position) VALUES(3, 1, "Chaser"); -- Hermione
 
 
 -- create event
-INSERT INTO event(host_id, location) VALUES(1, "Astronomy Tower"); -- hopefully hosted by Hogwarts
+INSERT INTO event(host_id, location,event_name) VALUES(1, "Astronomy Tower","Practice"); -- hopefully hosted by Hogwarts
 
 -- attend events
-INSERT INTO attend(EID,UID) VALUES(1, 1); -- Harry goes to practice at astronomy tower
-INSERT INTO attend(EID,UID) VALUES(1, 2); -- Ron goes to practice at astronomy tower
+INSERT INTO attend(EID,UID,status) VALUES(1, 1,"y"); -- Harry goes to practice at astronomy tower
+INSERT INTO attend(EID,UID,status) VALUES(1, 2,"m"); -- Ron goes to practice at astronomy tower

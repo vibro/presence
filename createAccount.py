@@ -47,18 +47,23 @@ def createAccount(name,dob,email,phnum,nickname,password):
         print("<p>Account with this email already exists")
     else:
         curs.execute('INSERT INTO user(email,name,dob,phnum,nickname) values(%s, %s, %s, %s, %s)', (email,name,dob,phnum,nickname))
-        curs.execute('SELECT UID from user where email=%s', (email,))
-        row = curs.fetchone()
-        if row == None:
-            print("<p>Something is wrong")
-        else:
-        #add the password
-            uid = row['UID']
-            curs.execute('INSERT into userpass values(%s, %s)',(uid,password))
+
+         curs.execute('INSERT into userpass values(last_id_insert(), password(%s))',(uid,password))
             print("<p>Inserted user and password!")
             print ("<p>Your account has been created")
-            retrieveUser(uid)
-   
+            retrieveUser(uid)  
+
+        # curs.execute('SELECT UID from user where email=%s', (email,))
+        # row = curs.fetchone()
+        # if row == None:
+        #     print("<p>Something is wrong")
+        # else:
+        # #add the password
+        #     uid = row['UID']
+        #     curs.execute('INSERT into userpass values(%s, %s)',(uid,password))
+        #     print("<p>Inserted user and password!")
+        #     print ("<p>Your account has been created")
+        #     retrieveUser(uid)  
 
 ''' Checks if user exists by email address.'''
 ''' No two users can have the same email'''

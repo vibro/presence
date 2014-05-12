@@ -25,4 +25,4 @@ def main():
 if __name__ == "__main__":
     print "Content-type: text/html\n"
 
-    print render_webpage('./presence/viewRoster.html',main()) 
+    print render_webpage('viewRoster.html',main()) 
