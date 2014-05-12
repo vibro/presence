@@ -18,7 +18,8 @@ def main():
   #cgi.test()
   global form_data
   form_data = cgi.FieldStorage()
-  return viewEvents.submit(form_data) #returns an html representation of the events
+  submit_type = form_data.getfirst("submit")
+  return viewEvents.submit(form_data, submit_type) #returns an html representation of the events
 
 
 if __name__ == "__main__":
