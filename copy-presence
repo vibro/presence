@@ -22,5 +22,12 @@ cp -p rugsbee_dsn.py ../.
 cp -p viewEvents.cgi ../.
 cp -p viewEvents.py ../.
 
+cp -p viewTeams.cgi ../.
+cp -p viewTeams.py ../.
+
+cp -p viewRoster.cgi ../.
+cp -p viewRoster.py ../.
+
+
 cp -p update-presence ../.
 

@@ -1,0 +1,42 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML lang="en">
+  <head>
+    <link href='./presence/css/bootstrap.css' rel='stylesheet' type='text/css'>
+    <title>View your Roster</title>
+  </head>
+
+  <body>
+
+
+<div class="container">
+
+  <h1>View Roster</h1>
+  
+
+  <p class="lead"> View the roster for your team. Input your team ID, and hit submit. </p>
+
+<!-- REMEMBER TO CHANGE THIS TO THE RIGHT LINK-->   
+    <form method=GET action="viewRoster.cgi">
+
+      <fieldset>
+	<legend><span>View Roster</span></legend>
+	<table>
+	  <tr><td>User ID:</label></td><td><input type="text" name="TID" value="1"></td></tr>
+	</table>
+      </fieldset>
+      <p>
+	<!-- <input type='button' value='New Form' onClick="window.location='viewEvents.cgi'"> -->
+	<input type='submit' name='submit' value='View Roster'>
+    </form>
+
+<div class="container" id="events">
+
+{response}
+
+
+<!-- return the data here!-->
+</div>
+
+</div> <!-- /.container -->
+    </body>
+</html>

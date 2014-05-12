@@ -23,4 +23,4 @@ def main():
 if __name__ == "__main__":
     print "Content-type: text/html\n"
     main()
-    print render_webpage('presence/createEvent.html',"")
+    print render_webpage('createEvent.html',"")

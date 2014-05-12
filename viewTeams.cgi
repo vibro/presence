@@ -2,7 +2,7 @@
 
 import sys
 import cgi
-import viewEvents
+import viewTeams #PROBABLY WILL CHANGE THIS
 import cgi_utils_sda
 import cgitb; cgitb.enable()
 
@@ -18,11 +18,10 @@ def main():
   #cgi.test()
   global form_data
   form_data = cgi.FieldStorage()
-  submit_type = form_data.getfirst("submit")
-  return viewEvents.submit(form_data, submit_type) #returns an html representation of the events
+  return viewTeams.submit(form_data) #returns an html representation of the events
 
 
 if __name__ == "__main__":
     print "Content-type: text/html\n"
 
-    print render_webpage('viewEvents.html',main()) 
+    print render_webpage('viewTeams.html',main()) 

@@ -17,5 +17,5 @@ if __name__ == "__main__":
     form_data = cgi.FieldStorage()
     addMember.submit(form_data) #creates an event for a team
     
-    print render_webpage('presence/addMember.html',"")
+    print render_webpage('addMember.html',"")
     
