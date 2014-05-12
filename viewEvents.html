@@ -16,30 +16,23 @@
   <p class="lead"> View the events that from a team perspective or a user perspective. Select whether you are a team or a user, input your ID, and hit submit. </p>
 
 <!-- REMEMBER TO CHANGE THIS TO THE RIGHT LINK-->   
-    <form method=GET action="viewEvents.cgi">
+    <form method=GET action="viewEvents.cgi" class="form-inline">
 
       <fieldset>
 	<legend><span>View Events</span></legend>
 	
-	<div class="form-group"> <!-- Not quite working -->
 	<select required name="view">
 	  <option value="user"> User </option>
 	  <option value="team"> Team </option>
 	</select>
-	<table>
-	  <tr><td>ID:</label></td><td><input type="text" name="ID" value="1"></td></tr>
-	</table>
-       </div>
+	<label> ID: </label> <input type="text" name="ID" value="1">
+	<input type='submit' name='submit' value='Find Events' class="btn">
       </fieldset>
-      <p>
-	<!-- <input type='button' value='New Form' onClick="window.location='viewEvents.cgi'"> -->
-	<input type='submit' name='submit' value='Find Events'>
     </form>
 
 <div class="container" id="events">
 
 {response}
-
 
 <!-- return the data here!-->
 </div>

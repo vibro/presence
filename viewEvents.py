@@ -57,11 +57,11 @@ def getEvent(id,view):
 #prints the table data cell of the radio button.
 # requires the EID and the UID for the user
 def printAttendRadio(user,event): 
-    html = "<td><form method=\"post\" action=\"viewEvents.cgi\">" # runs the viewEvents.cgi
-    html +="<input type=\"radio\" name=\"attend\" value=\"yes\" checked> yes\n" #yes option
-    html += "<input type=\"radio\" name=\"attend\" value=\"no\"> no\n" #no option
-    html +="<input type=\"radio\" name=\"attend\" value=\"maybe\"> maybe\n" #maybe option
-    html +="<input type=\"submit\" name=\"submit\" value=\"Update Attendance\"> \n" #submit button
+    html = "<td><form method=\"post\" action=\"viewEvents.cgi\" class=\"form-inline\">" # runs the viewEvents.cgi
+    html +="<input type=\"radio\" name=\"attend\" value=\"yes\" checked> <label class=\"radio\"> Yes</label>\n" #yes option
+    html += "<input type=\"radio\" name=\"attend\" value=\"no\"> <label class=\"radio\"> No</label>\n" #no option
+    html +="<input type=\"radio\" name=\"attend\" value=\"maybe\"> <label class=\"radio\"> Maybe</label>\n" #maybe option
+    html +="<input type=\"submit\" name=\"submit\" value=\"Update Attendance\" class=\"btn\"> \n" #submit button
     html +="<input type=\"hidden\" name=\"event\" value=\""+ event + "\">\n" #encodes the event type
     html +="<input type=\"hidden\" name=\"user\" value=\"" + user + "\">\n" #encodes the userID. Might not need this later with sessions
 
@@ -79,7 +79,7 @@ def printUserTable(id):
 
         # HTML Formatting below 
     header = "<div class=\"container\"><h2> Events for User no. " + str(id) +  "</h2> \n <hr>"
-    tableHead = "<table class=\"table table-striped\"> <tr> \n <th> host_id </th> \n <th> location </th> \n <th> event_date </th> \n <th> Attend</th> </tr>"
+    tableHead = "<table class=\"table table-striped\"> <thead> <tr> \n <th> host_id </th> \n <th> location </th> \n <th> event_date </th> \n <th> Attend?</th> </tr> </thead>"
     tableEnd = "</table></div>"
 
     lines = []    
@@ -112,7 +112,7 @@ def printTeamTable(id):
 
         # HTML Formatting below 
     header = "<div class=\"container\"><h2> Events for team no. " + str(id) +  "</h2> \n <hr>"
-    tableHead = "<table class=\"table table-striped\"> <tr> \n <th> host_id </th> \n <th> location </th> \n <th> event_date </th> \n <th> </th> </tr>"
+    tableHead = "<table class=\"table table-striped\"> <thead> <tr> \n <th> host_id </th> \n <th> location </th> \n <th> event_date </th> \n <th> </th> </tr> </thead>"
     tableEnd = "</table></div>"
 
     lines = []    
@@ -130,7 +130,7 @@ def printTeamTable(id):
         lines.append("<tr>" + "<td>" +  str(row.get('host_id')) + "</td>") #displays the hosting team
         lines.append("<td>" + str(row.get('location')) + "</td>") #displays the event location
         lines.append("<td>" + str(row.get('event_date')) + "</td>") #displays the event date
-        lines.append("<td><input type=\"submit\" name=\"submit\" value=\"View Attendance\"> </td></tr>\n") #view attending button
+        lines.append("<td><input type=\"submit\" name=\"submit\" value=\"View Attendance\" class=\"btn\"> </td></tr>\n") #view attending button
         #displays an optiion to view all users who are attending
 
 
