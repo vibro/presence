@@ -17,7 +17,6 @@ global curs #declaring global
 
 ''' Called on submit '''
 def submit(form_data):
-    print "submit method in createAccount.py"
     #connect to the database
     global conn, curs
     conn = connect()
@@ -49,10 +48,7 @@ def createAccount(name,dob,email,phnum,nickname,password):
         curs.execute('INSERT INTO user(email,name,dob,phnum,nickname) values(%s, %s, %s, %s, %s)', (email,name,dob,phnum,nickname))
         curs.execute('SELECT UID from user where email=%s', (email,))
         row = curs.fetchone()
-        if row == None:
-            print("<p>Something is wrong")
-        else:
-        #add the password
+        if row is not None:
             uid = row['UID']
             curs.execute('INSERT into userpass values(%s, %s)',(uid,password))
             print("<p>Inserted user and password!")

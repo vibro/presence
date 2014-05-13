@@ -1,0 +1,6 @@
+# My attempt at a .gitignore
+# Written by Tori Brown
+
+*.pyc
+*~
+
