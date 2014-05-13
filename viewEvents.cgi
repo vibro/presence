@@ -18,7 +18,14 @@ def main():
   #cgi.test()
   global form_data
   form_data = cgi.FieldStorage()
+
+  ''' #v useful for debugging
+  print "Your form contained"
+  for k in form_data:
+      print("{key} => {value}".format(key=k,value=form_data.getfirst(k)))		
+  '''
   submit_type = form_data.getfirst("submit")
+  
   return viewEvents.submit(form_data, submit_type) #returns an html representation of the events
 
 
