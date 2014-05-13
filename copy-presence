@@ -1,14 +1,16 @@
 #!/bin/bash
 
 
-chmod a+r *.cgi
+chmod a+rx *.cgi
 chmod og-w *.cgi
 
 cp -p createTeam.cgi ../.
 cp -p createTeam.py ../.
+cp -p createTeam.html ../.
 
 cp -p createEvent.cgi ../.
 cp -p createEvent.py ../.
+cp -p createEvent.html ../.
 
 cp -p createAccount.cgi ../.
 cp -p createAccount.py ../.
@@ -21,6 +23,7 @@ cp -p rugsbee_dsn.py ../.
 
 cp -p viewEvents.cgi ../.
 cp -p viewEvents.py ../.
+cp -p viewEvents.html ../.
 
 cp -p viewTeams.cgi ../.
 cp -p viewTeams.py ../.
