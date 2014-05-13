@@ -1,0 +1,8 @@
+#!/bin/bash
+
+
+chmod a+r *.cgi
+chmod og-w *.cgi
+
+chmod a+r css/*.css
+chmod a+r images/*.png
