@@ -3,6 +3,10 @@
 
 chmod a+r *.cgi
 chmod og-w *.cgi
+chmod a+r index.html
+
+chmod a+x css/
+chmod a+x images/
 
 chmod a+r css/*.css
 chmod a+r images/*.png
