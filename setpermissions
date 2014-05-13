@@ -8,5 +8,5 @@ chmod a+r index.html
 chmod a+x css/
 chmod a+x images/
 
-chmod a+r css/*.css
-chmod a+r images/*.png
+chmod a+r css/*
+chmod a+r images/*
