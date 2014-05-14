@@ -29,7 +29,7 @@ def submit(form_data,submit_type):
         return updateAttendance(form_data)
         #execute Attendance thing
     elif (submit_type == "View Attendance"):
-        return printAttendance(1) # Needs to retrieve the proper information in the data
+        return printAttendance(form_data) # Needs to retrieve the proper information in the data
     else:
     #retrieves the data from the form for the sql query for events
         view = form_data.getfirst("view") #whether in team or user mode
@@ -83,7 +83,9 @@ def printAttendRadio(user,event,check):
     return formhead + yes + no + maybe + html
 
 #returns the users attending an event
-def printAttendance(EID):
+def printAttendance(form_data):
+    EID = form_data.getfirst("event")
+
     global curs
     curs.execute('SELECT * from attend where EID = %s', (EID,)) #Make this so it generates the name
 
