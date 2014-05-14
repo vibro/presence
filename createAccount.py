@@ -17,7 +17,6 @@ global curs #declaring global
 
 ''' Called on submit '''
 def submit(form_data):
-    print "submit method in createAccount.py"
     #connect to the database
     global conn, curs
     conn = connect()
@@ -47,6 +46,7 @@ def createAccount(name,dob,email,phnum,nickname,password):
         print("<p>Account with this email already exists")
     else:
         curs.execute('INSERT INTO user(email,name,dob,phnum,nickname) values(%s, %s, %s, %s, %s)', (email,name,dob,phnum,nickname))
+
         statement = "password('"+password+"')"
         print statement
         curs.execute('INSERT into userpass values(last_id_insert(), %s)',(uid,statement))

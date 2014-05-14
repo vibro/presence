@@ -21,5 +21,6 @@ cp -p viewTeams.py presence/.
 cp -p viewRoster.cgi presence/.
 cp -p viewRoster.py presence/.
 
-cp -p functions.py presence/.
+
+
 
