@@ -1,0 +1,16 @@
+#!/bin/bash
+
+
+chmod a+r *.cgi
+chmod og-w *.cgi
+chmod a+r index.html
+chmod a+r favicon.ico
+
+chmod a+x css/
+chmod a+x images/
+
+chmod a+r css/*
+chmod a+r images/*
+
+
+

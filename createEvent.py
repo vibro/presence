@@ -30,10 +30,10 @@ def submit(form_data):
     # Retrieve and escape the necessary data to insert into the database
     host = form_data.getfirst("hostID")
     
-    
     location = form_data.getfirst("event_loc") #needs escaping?
 
     date = form_data.getfirst("event_date") #refine later to date
+    name = form_data.getfirst("event_name")
 
     #put this into the date format that SQL understands
     month = form_data.getfirst("month")
@@ -45,19 +45,18 @@ def submit(form_data):
     if (month != None and day != None and year != None):
         sql_date = year+ "-" + month + "-" + day
         #print sql_date
-
-
         #creates the event, even if the sql_date is empty
-    createEvent(host,sql_date,location)
+    return createEvent(host,sql_date,name,location)
     
     
 ''' Creates an event by executing a SQL insert statement.'''
-def createEvent(host,date,location):
+def createEvent(host,date,name,location):
     global curs
-    curs.execute('INSERT INTO event(host_id, event_date, location) VALUES(%s,%s,%s)',(host,date,location)) #refine later
+    curs.execute('INSERT INTO event(host_id, location, event_date, event_name) VALUES(%s,%s,%s,%s)',(host,location,date,name)) #refine later
     if (date != None and location != None):
-        print ("<p>Your event on " + date + " at " + location + " has been created")
-
+        return "<p>Your event <em>" + name + "</em> on " + date + " at <em>" + location + "</em> has been created"
+    else:
+        return ""
 
 ''' Creates a database connection. '''
 def connect():

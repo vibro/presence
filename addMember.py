@@ -17,7 +17,6 @@ global curs #declaring global
 
 ''' Called on submit '''
 def submit(form_data):
-    print "submit method in addMember.py"
     #connect to the database
     global conn, curs
     conn = connect()
