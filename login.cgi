@@ -3,17 +3,17 @@
 import os
 import sys
 import cgi
-import pickle
 import Cookie
 import datetime
 import cgi_utils_sda
 import cgitb; cgitb.enable()
+import session
 
-PY_CGI_SESS_ID='PY_CGI_SESS_ID'   # a constant, the name of the cookie
+SESS_ID='SESSID'   # a constant, the name of the cookie
  
 def session_id():
     '''Intended to mimic the behavior of the PHP function of this name'''
-    sesscookie = cgi_utils_sda.getCookieFromRequest(PY_CGI_SESS_ID)
+    sesscookie = cgi_utils_sda.getCookieFromRequest(SESS_ID)
     if sesscookie == None:
         sessid = cgi_utils_sda.unique_id()
         if sessid == None:
@@ -29,14 +29,11 @@ except that instead of creating a "superglobal," this will just return
 a data structure that can be used in set_session_value and get_session_value.
 It takes as an argument the directory to read session data from.'''
     sessid = session_id()
-    # Set a cookie and print that header
+# Set a cookie and print that header
     sesscookie = Cookie.SimpleCookie()
-    cgi_utils_sda.setCookie(sesscookie,PY_CGI_SESS_ID,sessid)
+    cgi_utils_sda.setCookie(sesscookie(SESS_ID,sessid))
     print(sesscookie)
     # check to see if there's any session data
-    if not os.path.isfile(dir+sessid):
-        return {}
-    output = open(dir+sessid,'r+')
     # session already exists, so load saved data
     # rb for read binary
     input = open(dir+sessid,'r')
@@ -49,18 +46,38 @@ It takes as an argument the directory to read session data from.'''
                          +sess_data)
         return
 
-def save_session(dir,data):
+def save_session(form_data):
+    global SESS_ID
     '''Save the session data to the filesystem.'''
     sessid = session_id()
-    output = open(dir+sessid,'w+')
-    pickle.dump(data,output,-1)
-    output.close()
- 
+    
+    session.submitLogin(form_data,sessid)
+
+def set_cookie(sessid):
+    sesscookie = Cookie.SimpleCookie()
+    cgi_utils_sda.setCookie(sesscookie,SESS_ID,sessid)
+    return sesscookie
+
+def logout(sessid):
+    if session.existsSession(sessid):
+        session.deleteSession(sessid)
+        cookie = set_cookie('')
+        return cookie
 def main():
-    print "Content-type: text/html\n"
-    my_sess_dir = '/sessions/'
-    sess_data = session_start(my_sess_dir)
-    print_page("","I'm not sure what's happening")
+    #print "Content-type: text/html\n"
+    form_data = cgi.FieldStorage()
+    if (form_data.getfirst('login') is not None):
+        cookie = set_cookie(session_id())
+        cgi_utils_sda.print_headers(cookie)
+        save_session(form_data)
+    elif (form_data.getfirst('logout') is not None):
+        cookie = logout(session_id())
+        cgi_utils_sda.print_headers(cookie)
+        print cookie
+        
+    else:
+        cgi_utils_sda.print_headers(None)
+    print_page("","Cool i guess")
 
 
 def print_page(cookie,message):
