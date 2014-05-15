@@ -4,7 +4,7 @@ import sys
 import cgi
 import cgi_utils_sda
 import cgitb; cgitb.enable()
-
+import headerUtils
 
 def makeButtons(TID):
     buttons='''
@@ -18,10 +18,12 @@ def makeButtons(TID):
 def render_webpage(template,TID):
     str = cgi_utils_sda.file_contents(template)
     buttons = makeButtons(TID)
-    return str.format(buttons=buttons)
+    navbar = headerUtils.make_navbar()
+    return str.format(navbar=navbar,buttons=buttons)
 
 
 if __name__ == "__main__":
     print "Content-type: text/html\n"   
+    print headerUtils.print_header("Manager Dashboard")
     print render_webpage('managerDash.html',"1")
     
