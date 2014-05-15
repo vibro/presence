@@ -8,25 +8,31 @@ import cgi_utils_sda
 def submitLogin(form_data,sessid):
     email = form_data.getfirst('email')
     password = form_data.getfirst('password')
-
+    error = False
+    UID = ""
     if (email is not None or password is not None):
         UID = getUID(email)
+        error = checkPass(UID,password)
+            #error = True
+            #error = setUserSession(sessid,UID)
+        #else:
+        #   error = False
+            #error = "Incorrect email or password"
+
+    return error,UID
     
-        if checkPass(UID,password):
-            setUserSession(sessid,UID)
-        else:
-            print "something went wrong"
-            
 def setUserSession(sessid,uid):
     curs = cursor(connect())
     if existsSession(sessid):
         print "session exists"
+        return "already logged in"
     else:
         curs.execute('INSERT INTO session(SESSID,UID) values(%s,%s)',(sessid,uid))
+        return "Successfully logged in"
+
 def deleteSession(sessid):
     curs = cursor(connect())
     curs.execute('DELETE from session where SESSID=%s',(sessid,))
-    print "succesfully logged out"
 
 def existsSession(sessid):
     curs = cursor(connect())
@@ -62,25 +68,24 @@ def checkPass(uid,password):
     curs = cursor(connect())
     curs.execute('SELECT * from userpass where id=%s',(uid,))
     row = curs.fetchone()
-    if row == None:
-        print 'no usr of that email'
-    else:
+    if row != None:
+        
         uid = row['id']
         origpass = row['password']
-        print "orig pass: "+ origpass +"\n"
+        #print "orig pass: "+ origpass +"\n"
     curs.execute('SELECT password(%s)',(password,))
     row = curs.fetchone()
     if row == None:
-        print 'wrong password'
+        #print 'wrong password'
         passcheck = None
     else:
         passcheck = row["password('"+password+"')"]
-        print "passcheck: "+ passcheck
+        #print "passcheck: "+ passcheck
     if (passcheck == origpass):
-        print "success! you are now logged in!"
+        #print "success! you are now logged in!"
         return True
     else:
-        print "password incorrect"
+        #print "password incorrect"
         return False
 
 ''' Creates a database connection. '''

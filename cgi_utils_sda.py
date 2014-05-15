@@ -64,7 +64,7 @@ def getCookieFromRequest(cookiename):
     except (Cookie.CookieError, KeyError):
         return None
 
-def print_headers(cookie):
+def print_headers(cookie,redirect=""):
     '''Prints the headers of the response, including the cookie, if any.
 
 You can supply None as the cookie if you do not want any cookies set in the response.'''
@@ -74,6 +74,7 @@ You can supply None as the cookie if you do not want any cookies set in the resp
     print 'Content-type: text/html'
     if cookie != None: 
         print cookie.output()
+    print redirect
     print '\n'
 
 # ================================================================

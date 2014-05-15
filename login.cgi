@@ -8,6 +8,7 @@ import datetime
 import cgi_utils_sda
 import cgitb; cgitb.enable()
 import session
+import headerUtils
 
 SESS_ID='SESSID'   # a constant, the name of the cookie
  
@@ -23,68 +24,57 @@ def session_id():
         sessid=sesscookie.value   # get value out of morsel
     return sessid
 
-def session_start(dir):
-    '''Intended to mimic the behavior of the PHP function of this name,
-except that instead of creating a "superglobal," this will just return
-a data structure that can be used in set_session_value and get_session_value.
-It takes as an argument the directory to read session data from.'''
-    sessid = session_id()
-# Set a cookie and print that header
-    sesscookie = Cookie.SimpleCookie()
-    cgi_utils_sda.setCookie(sesscookie(SESS_ID,sessid))
-    print(sesscookie)
-    # check to see if there's any session data
-    # session already exists, so load saved data
-    # rb for read binary
-    input = open(dir+sessid,'r')
-    sess_data = pickle.load(input)
-    input.close()
-    if isinstance(sess_data,dict):
-        return sess_data
-    else:
-        raise Exception ("Possibly corrupted session data; not a dictionary: "
-                         +sess_data)
-        return
-
 def save_session(form_data):
     global SESS_ID
-    '''Save the session data to the filesystem.'''
+    '''Save the session data to the database.'''
     sessid = session_id()
     
-    session.submitLogin(form_data,sessid)
+    return session.submitLogin(form_data,sessid)
 
-def set_cookie(sessid):
+def set_cookie(sessid,expires=None):
     sesscookie = Cookie.SimpleCookie()
-    cgi_utils_sda.setCookie(sesscookie,SESS_ID,sessid)
+    cgi_utils_sda.setCookie(sesscookie,SESS_ID,sessid,expires)
     return sesscookie
 
 def logout(sessid):
     if session.existsSession(sessid):
         session.deleteSession(sessid)
-        cookie = set_cookie('')
+        cookie = set_cookie(None,-1)
         return cookie
+
 def main():
-    #print "Content-type: text/html\n"
     form_data = cgi.FieldStorage()
+    error = ""
     if (form_data.getfirst('login') is not None):
-        cookie = set_cookie(session_id())
-        cgi_utils_sda.print_headers(cookie)
-        save_session(form_data)
+        exists,UID = save_session(form_data)
+        if exists is False: 
+            error = "Invalid email or password"
+            cgi_utils_sda.print_headers(None)
+        else:
+            cookie = set_cookie(session_id())
+            cgi_utils_sda.print_headers(cookie,"Location:userDashboard.cgi")
+            session.setUserSession(session_id(),UID)
+            error = "Login successful"
+    
+    '''Will hopefully not need this'''
     elif (form_data.getfirst('logout') is not None):
         cookie = logout(session_id())
         cgi_utils_sda.print_headers(cookie)
-        print cookie
-        
+
     else:
         cgi_utils_sda.print_headers(None)
-    print_page("","Cool i guess")
+
+    print headerUtils.print_header("Log in")
+    print_page(error)
 
 
-def print_page(cookie,message):
+def print_page(message):
     template = cgi_utils_sda.file_contents('login.html')
-    print template.format(cookie=cookie,text=message,msg="")
-
+    navbar = headerUtils.make_navbar()
+    print template.format(navbar=navbar,message=message)
 
  
 if __name__ == '__main__':
     main()
+
+    

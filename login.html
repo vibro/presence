@@ -1,17 +1,7 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<HTML lang="en">
-  <head>
-    {cookie}
-    <link href='http://fonts.googleapis.com/css?family=Voltaire' rel='stylesheet' type='text/css'>
-    <title>Log in</title>
-    <link href='./css/bootstrap.css' rel='stylesheet' type='text/css'>
 
-  </head>
- 
-  <body>
-    <div class="container">
-      {text}
-      {msg}
+<body>
+  {navbar}
+  <div class="container">
       <p>Please enter your login information
 	<form action="login.cgi" method="get">
 	email: <input type="text" name="email">
@@ -19,7 +9,7 @@
 	<input type="submit" value="login" name="login">
 	<input type="submit" value="logout" name="logout">
 	</form>
-	
+	{message}
 
 
 </div>
