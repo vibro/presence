@@ -33,7 +33,7 @@ def submit(form_data):
     
     if (password != passcheck):
         print("<p>Passwords do not match")
-    else:
+    elif (password != None):
         createAccount(name,dob,email,phnum,nickname,password)
         
         

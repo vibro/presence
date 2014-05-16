@@ -55,8 +55,6 @@ def main():
             cgi_utils_sda.print_headers(cookie,"Location:userDashboard.cgi")
             session.setUserSession(session_id(),UID)
             error = "Login successful"
-    
-    '''Will hopefully not need this'''
     elif (form_data.getfirst('logout') is not None):
         cookie = logout(session_id())
         cgi_utils_sda.print_headers(cookie)
@@ -76,5 +74,6 @@ def print_page(message):
  
 if __name__ == '__main__':
     main()
+    
 
     

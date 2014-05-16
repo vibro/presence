@@ -1,4 +1,3 @@
-
 import MySQLdb
 from rugsbee_dsn import DSN # change later
 import dbconn
@@ -13,11 +12,6 @@ def submitLogin(form_data,sessid):
     if (email is not None or password is not None):
         UID = getUID(email)
         error = checkPass(UID,password)
-            #error = True
-            #error = setUserSession(sessid,UID)
-        #else:
-        #   error = False
-            #error = "Incorrect email or password"
 
     return error,UID
     
@@ -62,7 +56,12 @@ def getUser(sessid):
         return None
     else:
         uid = row['UID']
-        return uid
+        return str(uid)
+
+def getUserFromSession():
+    cookie = cgi_utils_sda.getCookieFromRequest("SESSID")
+    UID = getUser(str(cookie.value))
+    return UID
 
 def checkPass(uid,password):
     curs = cursor(connect())
