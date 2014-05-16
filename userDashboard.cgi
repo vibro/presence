@@ -22,7 +22,7 @@ def render_webpage(template,UID):
     return str.format(navbar=navbar,buttons=buttons)
 
 if __name__ == "__main__":
-    print "Content-type: text/html\n"
+    headerUtils.redirect()
     print headerUtils.print_header("User Dasboard")
     UID = session.getUserFromSession()
     print render_webpage('userDash.html',UID)

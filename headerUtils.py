@@ -24,3 +24,9 @@ def logged_status():
         return False
     else: 
         return True
+
+def redirect(cookie=None):
+    if logged_status():
+        cgi_utils_sda.print_headers(cookie)
+    else:
+        cgi_utils_sda.print_headers(cookie,"Location:login.cgi")

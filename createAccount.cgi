@@ -14,7 +14,7 @@ def render_webpage(template,string):
 
 
 if __name__ == "__main__":
-    print "Content-type: text/html\n"
+    headerUtils.redirect()
     form_data = cgi.FieldStorage()
     createAccount.submit(form_data) 
 
