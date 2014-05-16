@@ -103,28 +103,32 @@ def printUserTable(id):
     #execute the SQL query
     curs.execute('SELECT * FROM event,(SELECT * FROM attend WHERE UID = %s) as userEv where userEv.EID = event.EID', (id,))
 
-        # HTML Formatting below 
-    header = "<div class=\"container\"><h2> Events for User no. " + str(id) +  "</h2> \n <hr>"
-    tableHead = "<table class=\"table table-striped\"> <thead> <tr> \n <th> host_id </th> \n <th> location </th> \n <th> event_date </th> \n <th> Attend?</th> </tr> </thead>"
+    
+    # HTML Formatting below 
+    header = "<div class=\"panel panel-default\"><div class='panel-heading'> Events for User no. " + str(id) +  "</div>"
+    tableHead = "<table class=\"table table-striped\"> <thead> <tr> \n <th> Team Name </th> \n <th> Location </th> \n <th> Event Date </th> \n <th> Attend?</th> </tr> </thead>"
     tableEnd = "</table></div>"
 
     lines = []    
 
     while True:
         row = curs.fetchone()
-        #print "<p>curs.fetchone: " #debugging
-        #print row #debugging
+        #print "<p>curs.fetchone: " + row #debugging
 
         '''Advanced functionality of this would include using JSON to 
         provide a sortable view of the events. We can implement this
         in the future.'''
-        
+
         if row == None:
             # print "<h2> Events </h2>" + "\n".join(lines) #debugging 
             return header + tableHead + "\n".join(lines) + tableEnd
+
+        #execute a second SQL query to retrieve the team name
+        host_id = str(row.get('host_id'))    
+        curs.execute('SELECT name FROM team where TID = %s', (host_id,)) # retrieve the team name from the host id
+        row2 = curs.fetchone()
                 
-        # Later, perhaps modularize this to print out multiple rows of data
-        lines.append("<tr>" + "<td>" +  str(row.get('host_id')) + "</td>") #displays the hosting team
+        lines.append("<tr>" + "<td>" +  str(row2.get('name')) + "</td>") #displays the hosting team
         lines.append("<td>" + str(row.get('location')) + "</td>") #displays the event location
         lines.append("<td>" + str(row.get('event_date')) + "</td>") #displays the event date
         lines.append(printAttendRadio(id,str(row.get('EID')),str(row.get('status'))) + "</td></tr>\n") 
@@ -137,8 +141,8 @@ def printTeamTable(id):
     curs.execute('SELECT * FROM event WHERE host_id = %s', (id,))
 
         # HTML Formatting below 
-    header = "<div class=\"container\"><h2> Events for team no. " + str(id) +  "</h2> \n <hr>"
-    tableHead = "<table class=\"table table-striped\"> <thead> <tr> \n <th> host_id </th> \n <th> location </th> \n <th> event_date </th> \n <th> </th> </tr> </thead>"
+    header = "<div class=\"panel panel-default\"><div class='panel-heading'> Events for Team no. " + str(id) +  "</div>"
+    tableHead = "<table class=\"table table-striped\"> <thead> <tr> \n <th> Team Name </th> \n <th> Location </th> \n <th> Event Date </th> \n <th> </th> </tr> </thead>"
     tableEnd = "</table></div>"
 
     lines = []    
@@ -151,9 +155,13 @@ def printTeamTable(id):
         if row == None:
             # print "<h2> Events </h2>" + "\n".join(lines) #debugging 
             return header + tableHead + "\n".join(lines) + tableEnd
+
+        #execute a second SQL query to retrieve the team name
+        host_id = str(row.get('host_id'))    
+        curs.execute('SELECT name FROM team where TID = %s', (host_id,)) # retrieve the team name from the host id
+        row2 = curs.fetchone()
                 
-        # Later, perhaps modularize this to print out multiple rows of data
-        lines.append("<tr>" + "<td>" +  str(row.get('host_id')) + "</td>") #displays the hosting team
+        lines.append("<tr>" + "<td>" +  str(row2.get('name')) + "</td>") #displays the hosting team
         lines.append("<td>" + str(row.get('location')) + "</td>") #displays the event location
         lines.append("<td>" + str(row.get('event_date')) + "</td>") #displays the event date
         lines.append("<td><form method=\"post\" action=\"viewEvents.cgi\" class=\"form-inline\">")
