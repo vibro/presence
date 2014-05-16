@@ -168,8 +168,8 @@ def updateAttendance(form_data):
     UID = form_data.getfirst("user") #gets the userID, later might not be needed because of sessions
     EID = form_data.getfirst("event") #gets the eventID for updating database
 
-    print "EID" + str(EID)
-    print "UID" + str(UID)
+   # print "EID" + str(EID) #debugging
+   # print "UID" + str(UID) #debugging
 
     global curs
     msg =""

@@ -24,9 +24,6 @@ def submit(form_data):
     conn = connect()
     curs = conn.cursor(MySQLdb.cursors.DictCursor)
 
-    # You'll want to insert some checks here before running the actual create event. 
-    # Checks include that the information is provided and that a duplicate event doesn't exist
-
     # Retrieve and escape the necessary data to insert into the database
     host = form_data.getfirst("hostID")
     
@@ -39,11 +36,7 @@ def submit(form_data):
     month = form_data.getfirst("month")
     day = form_data.getfirst("day")
     year = form_data.getfirst("year")
-    sql_date = "" #initialize to empty
-
-
-    if (month != None and day != None and year != None):
-        sql_date = year+ "-" + month + "-" + day
+    sql_date = str(year)+ "-" + str(month) + "-" + str(day)
         #print sql_date
         #creates the event, even if the sql_date is empty
     return createEvent(host,sql_date,name,location)
@@ -52,9 +45,14 @@ def submit(form_data):
 ''' Creates an event by executing a SQL insert statement.'''
 def createEvent(host,date,name,location):
     global curs
+    
+    #doesn't check whether an event is duplicated since steams may sometimes hold simultaneous events.
     curs.execute('INSERT INTO event(host_id, location, event_date, event_name) VALUES(%s,%s,%s,%s)',(host,location,date,name)) #refine later
     if (date != None and location != None):
-        return "<p>Your event <em>" + name + "</em> on " + date + " at <em>" + location + "</em> has been created"
+        response = "<div class='container'><div class='panel panel-default'> \n <div class='panel-body'>"
+        response += "<p>Your event <em>" + name + "</em> on " + date + " at <em>" + location + "</em> has been created"
+        response +="</div></div></div>"
+        return response
     else:
         return ""
 
