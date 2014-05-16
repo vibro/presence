@@ -5,13 +5,14 @@ import cgi
 import createTeam
 import cgi_utils_sda
 import cgitb; cgitb.enable()
-
+import headerUtils
 
 
 '''Method that prints out the appropriate webpage'''
 def render_webpage(template,string):
     str = cgi_utils_sda.file_contents(template) 
-    return str.format(string=string)
+    navbar = headerUtils.make_navbar()
+    return str.format(navbar=navbar,string=string)
 
 def main():
   # Conditionals that determine what action to take
@@ -24,5 +25,5 @@ def main():
 if __name__ == "__main__":
     print "Content-type: text/html\n"
     main()
-
+    print headerUtils.print_header("Create Team")
     print render_webpage('createTeam.html',"")

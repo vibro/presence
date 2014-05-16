@@ -4,7 +4,7 @@ import sys
 import cgi
 import cgi_utils_sda
 import cgitb; cgitb.enable()
-
+import headerUtils
 
 def makeButtons(UID):
     buttons='''
@@ -17,10 +17,11 @@ def makeButtons(UID):
 def render_webpage(template,UID):
     str = cgi_utils_sda.file_contents(template)
     buttons = makeButtons(UID)
-    return str.format(buttons=buttons)
-
+    navbar = headerUtils.make_navbar()
+    return str.format(navbar=navbar,buttons=buttons)
 
 if __name__ == "__main__":
-    print "Content-type: text/html\n"   
+    print "Content-type: text/html\n"
+    print headerUtils.print_header("User Dasboard")
     print render_webpage('userDash.html',"1")
     
