@@ -23,7 +23,7 @@ def render_webpage(template,TID):
 
 
 if __name__ == "__main__":
-    print "Content-type: text/html\n"   
+    headerUtils.redirect()
     print headerUtils.print_header("Manager Dashboard")
     print render_webpage('managerDash.html',"1")
     

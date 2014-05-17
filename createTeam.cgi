@@ -14,16 +14,11 @@ def render_webpage(template,string):
     navbar = headerUtils.make_navbar()
     return str.format(navbar=navbar,string=string)
 
-def main():
-  # Conditionals that determine what action to take
-  #cgi.test()
-  global form_data
-  form_data = cgi.FieldStorage()
-  createTeam.submit(form_data) #creates a team
-
 
 if __name__ == "__main__":
-    print "Content-type: text/html\n"
+    headerUtils.redirect()
     main()
+    form_data = cgi.FieldStorage()
+    createTeam.submit(form_data) #creates a team
     print headerUtils.print_header("Create Team")
     print render_webpage('createTeam.html',"")
