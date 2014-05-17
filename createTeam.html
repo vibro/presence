@@ -8,22 +8,40 @@
   <p class="lead"> Create a team for presence. </p>
 
 <!-- REMEMBER TO CHANGE THIS TO THE RIGHT LINK-->   
-    <form method=post action="createTeam.cgi">
+    <form class="form-horizontal" role="form" method=post action="createTeam.cgi">
 
       <fieldset>
 	<legend><span>Create A Team</span></legend>
-	<table>
-	  <tr><td>Team Manager:</label></td><td><input type="text" name="teamManager" value="you"></td></tr>
-	  <tr><td>Team Name:</label></td><td><input type="text" name="teamName" value="Rugsbee"></td></tr>
-	  <tr><td>Location:</label></td><td><input type="text" name="location" value="Wellesley" ></td></tr>
-	</table>
+	<div class="panel panel-default">
+	  <div class="panel-body">
+	    
+	    <div class="form-group">
+	      <label class="col-sm-2 control-label">Team Manager: </label>
+	      <input type="text" name="teamManager" value="3" required>
+	    </div>
+
+	    <div class="form-group">
+	      <label class="col-sm-2 control-label"> Tean Name: </label>
+	      <input type="text" name="teamName" value="Ravenclaw" required>
+	    </div>
+
+	    <div class="form-group">
+	      <label class="col-sm-2 control-label"> Location: </label>
+	      <input type="text" name="location" value="Hogwarts">
+	    </div>
+
+
+	  </div>
+	</div>
       </fieldset>
       <p>
-	<input type='reset' value='Reset'>
-	<input type='button' value='New Form' onClick="window.location='createTeam.cgi'">
-	<input type='submit' name='submit' value='Add Data'>
+	<input type='submit' name='submit' value='Add Team' class="btn">
     </form>
 
 </div> <!-- /.container -->
+
+<div class="container" id="response">
+{string}
+</div>
     </body>
 </html>
