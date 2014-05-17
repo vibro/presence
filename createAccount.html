@@ -1,37 +1,74 @@
 <body>
-{navbar}
+  {navbar}
 
-<div class="container"> 
+  <div class="container"> 
 
 
-<h1>Create a new Presence Account</h1>
- 
-{string}
+    <h1>Create a new Presence Account</h1>
+    
+    <form class="form-horizontal" role="form" method="GET" action="createAccount.cgi">
 
-<form method="GET" action="createAccount.cgi">
+      <fieldset>
+	<legend><span>User Info</span></legend>
+	<div class="panel panel-default">
+	  <div class="panel-body">
 
-  <fieldset>
-    <legend>User Info</legend>
-    <table>
-      <tr><td>Name<input type="text" name="name" value="tori"></td></tr>
+	    <div class="form-group">
+	      <label class="col-sm-2 control-label"> Name: </label>
+	      <!--<div class="input-group">-->
+	      <input type="text" name="name" value="tori" required>
+	    </div>
+
+	    <div class="form-group">
+	      <label class="col-sm-2 control-label"> Birthdate: </label>
+	      <!--<div class="input-group">-->
+	      <input type="text" name="dob">
+	    </div>
+
+	    <div class="form-group">
+	      <label class="col-sm-2 control-label"> Email: </label>
+	      <input type="text" name="email" value="tori@email.com" required>
+	    </div>
+
+	    <div class="form-group">
+	      <label class="col-sm-2 control-label"> Phone Number </label>
+	      <input type="text" name="phnum" value="5551234567">
+	    </div>
+
+
+	    <div class="form-group">	    
+	      <label class="col-sm-2 control-label"> Password: </label>
+	      <input type="text" name="pass" value="tori" required>
+	    </div>
+
+
+	    <div class="form-group">
+
+	      <label class="col-sm-2 control-label"> Re-enter Password: </label>
+	      <input type="text" name="passcheck" required>
+	    </div>
+
+
+	    <div class="form-group"> 
+	      <label class="col-sm-2 control-label"> Nickname: </label>
+	      <input type="text" name="nickname" value="vibro">
+
+	    </div>
+
+
+      </fieldset>
       
-      <tr><td>Birthday<input type="text" name="dob"></td></tr>
-      <tr><td>Email<input type="text" name="email" value="tori@email.com"></td></tr>
-      <tr><td>Phone Number<input type="text" name="phnum" value="5551234567"></td></tr>
-      <tr><td>Password<input type="text" name="pass" value="tori"></td></tr>
-      <tr><td>Re-enter Password<input type="text" name="passcheck"></td></tr>
 
-      <tr><td>Nickname<input type="text" name="nickname" value="vibro"></td></tr>
+      <input type="submit" value="Create New Account" class="btn">
+      </div>
+      </div>  
+    </form>  
+    
+  </div>
 
-    </table>
-  </fieldset>
-  
-
-  <input type="submit" value="submit">
-  
-</form>  
- 
-</div>
+  <div>
+    {string}
+  </div>
 
 </body>
 </html>
