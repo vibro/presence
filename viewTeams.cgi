@@ -24,6 +24,6 @@ def main():
 
 
 if __name__ == "__main__":
-    print "Content-type: text/html\n"
+    headerUtils.redirect()
     print headerUtils.print_header("View Your Teams")  
     print render_webpage('viewTeams.html',main()) 
