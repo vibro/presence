@@ -23,37 +23,48 @@ def submit(form_data):
     curs = conn.cursor(MySQLdb.cursors.DictCursor)
 
     # Retrieve and escape the necessary data to insert into the database
-    name = form_data.getfirst("name")
-    dob = form_data.getfirst("dob")
-    email = form_data.getfirst("email")
-    phnum = form_data.getfirst("phnum")
-    nickname = form_data.getfirst("nickname")
-    password = form_data.getfirst("pass")
-    passcheck = form_data.getfirst("passcheck")
+    name = cgi.escape(str(form_data.getfirst("name")))
+    dob = str(form_data.getfirst("dob"))
+    email = cgi.escape(str(form_data.getfirst("email")))
+    phnum = str(form_data.getfirst("phnum"))
+    nickname = cgi.escape(str(form_data.getfirst("nickname")))
+    password = cgi.escape(str(form_data.getfirst("pass")))
+    passcheck = cgi.escape(str(form_data.getfirst("passcheck")))
     
     if (password != passcheck):
-        print("<p>Passwords do not match")
+        return "<div class='alert alert-danger'>Passwords do not match! </div>"
     elif (password != None):
         createAccount(name,dob,email,phnum,nickname,password)
+        return "trying to create account" #debugging
         
         
     
 ''' Creates an account by executing a SQL insert statement.'''
 
 def createAccount(name,dob,email,phnum,nickname,password):
+    print "top of the createAccount method"
     global curs
     if existsUser(email):
-        print("<p>Account with this email already exists")
+        print "user already exists" #debugging
+        return "<div class='alert alert-danger'> Account with this email already exists </div>)"
     else:
+        print "inserting account" #debugging
         curs.execute('INSERT INTO user(email,name,dob,phnum,nickname) values(%s, %s, %s, %s, %s)', (email,name,dob,phnum,nickname))
 
         statement = "password('"+password+"')"
+
         print statement
-        curs.execute('INSERT into userpass values(last_id_insert(), %s)',(uid,statement))
+        # Modifications
+        curs.execute('SELECT LAST_INSERT_ID()')
+        uid = curs.fetchone().get("LAST_INSERT_ID()")
+
+        curs.execute('INSERT into userpass values(%s, %s)',(uid,statement))
+        
         print("<p>Inserted user and password!")
         print ("<p>Your account has been created")
         retrieveUser(uid)  
 
+        return "<div class='alert alert-success'> Your account has been created! </div>"
         # curs.execute('SELECT UID from user where email=%s', (email,))
         # row = curs.fetchone()
         # if row == None:
@@ -73,6 +84,7 @@ def existsUser(email):
     global curs
     curs.execute('Select UID from user where email=%s',(email,))
     row = curs.fetchone()
+    print row
     if row == None:
         return False
     else: return True
