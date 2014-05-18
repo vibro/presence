@@ -13,15 +13,10 @@ def render_webpage(template,string):
     navbar = headerUtils.make_navbar()
     return str.format(navbar=navbar,response=string)
 
-def main():
-  # Conditionals that determine what action to take
-  #cgi.test()
-  global form_data
-  form_data = cgi.FieldStorage()
-  return createEvent.submit(form_data) #creates an event for a team
-
 
 if __name__ == "__main__":
-    print "Content-type: text/html\n"
+    headerUtils.redirect()
+    form_data = cgi.FieldStorage()
+    return createEvent.submit(form_data) #creates an event for a team
     print headerUtils.print_header("Create Event")
     print render_webpage('createEvent.html',main())
