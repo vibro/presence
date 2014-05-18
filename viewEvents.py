@@ -101,7 +101,7 @@ def printAttendance(form_data):
 def printUserTable(id):
     global curs
     #execute the SQL query
-    curs.execute('SELECT * FROM event,(SELECT * FROM attend WHERE UID = %s) as userEv where userEv.EID = event.EID', (id,))
+    curs.execute('SELECT * FROM (SELECT event.EID, host_id, location, event_date, event_name, status FROM event,(SELECT * FROM attend WHERE UID = %s) as userEv where userEv.EID = event.EID) as ev, team where ev.host_id = TID', (id,))
 
     
     # HTML Formatting below 
@@ -113,7 +113,7 @@ def printUserTable(id):
 
     while True:
         row = curs.fetchone()
-        #print "<p>curs.fetchone: " + row #debugging
+
 
         '''Advanced functionality of this would include using JSON to 
         provide a sortable view of the events. We can implement this
@@ -123,12 +123,7 @@ def printUserTable(id):
             # print "<h2> Events </h2>" + "\n".join(lines) #debugging 
             return header + tableHead + "\n".join(lines) + tableEnd
 
-        #execute a second SQL query to retrieve the team name
-        host_id = str(row.get('host_id'))    
-        curs.execute('SELECT name FROM team where TID = %s', (host_id,)) # retrieve the team name from the host id
-        row2 = curs.fetchone()
-                
-        lines.append("<tr>" + "<td>" +  str(row2.get('name')) + "</td>") #displays the hosting team
+        lines.append("<tr>" + "<td>" +  str(row.get('name')) + "</td>") #displays the hosting team
         lines.append("<td>" + str(row.get('location')) + "</td>") #displays the event location
         lines.append("<td>" + str(row.get('event_date')) + "</td>") #displays the event date
         lines.append(printAttendRadio(id,str(row.get('EID')),str(row.get('status'))) + "</td></tr>\n") 
@@ -137,9 +132,9 @@ def printUserTable(id):
 # HTML method Prints the form and the table header for the team table.
 def printTeamTable(id):
     global curs
-    #execute the SQL query
-    curs.execute('SELECT * FROM event WHERE host_id = %s', (id,))
-
+    #execute the SQL query that retrieves the events associated with the team
+    curs.execute('SELECT * FROM event, team WHERE host_id = %s and TID = %s', (id, id))
+    
         # HTML Formatting below 
     header = "<div class=\"panel panel-default\"><div class='panel-heading'> Events for Team no. " + str(id) +  "</div>"
     tableHead = "<table class=\"table table-striped\"> <thead> <tr> \n <th> Team Name </th> \n <th> Location </th> \n <th> Event Date </th> \n <th> </th> </tr> </thead>"
@@ -148,20 +143,16 @@ def printTeamTable(id):
     lines = []    
 
     while True:
-        row = curs.fetchone()
-        #print "<p>curs.fetchone: " #debugging
-        #print row #debugging
+
+        row = curs.fetchone() 
+        print "<p>curs.fetchone: " #debugging
+        print row #debugging
         
         if row == None:
             # print "<h2> Events </h2>" + "\n".join(lines) #debugging 
             return header + tableHead + "\n".join(lines) + tableEnd
 
-        #execute a second SQL query to retrieve the team name
-        host_id = str(row.get('host_id'))    
-        curs.execute('SELECT name FROM team where TID = %s', (host_id,)) # retrieve the team name from the host id
-        row2 = curs.fetchone()
-                
-        lines.append("<tr>" + "<td>" +  str(row2.get('name')) + "</td>") #displays the hosting team
+        lines.append("<tr>" + "<td>" +  str(row.get('name')) + "</td>") #displays the hosting team
         lines.append("<td>" + str(row.get('location')) + "</td>") #displays the event location
         lines.append("<td>" + str(row.get('event_date')) + "</td>") #displays the event date
         lines.append("<td><form method=\"post\" action=\"viewEvents.cgi\" class=\"form-inline\">")

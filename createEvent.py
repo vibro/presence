@@ -25,12 +25,9 @@ def submit(form_data):
     curs = conn.cursor(MySQLdb.cursors.DictCursor)
 
     # Retrieve and escape the necessary data to insert into the database
-    host = form_data.getfirst("hostID")
-    
-    location = form_data.getfirst("event_loc") #needs escaping?
-
-    date = form_data.getfirst("event_date") #refine later to date
-    name = form_data.getfirst("event_name")
+    host = str(form_data.getfirst("hostID"))
+    location = cgi.escape(str(form_data.getfirst("event_loc"))) 
+    name = cgi.escape(str(form_data.getfirst("event_name")))
 
     #put this into the date format that SQL understands
     month = form_data.getfirst("month")
@@ -47,14 +44,23 @@ def createEvent(host,date,name,location):
     global curs
     
     #doesn't check whether an event is duplicated since steams may sometimes hold simultaneous events.
-    curs.execute('INSERT INTO event(host_id, location, event_date, event_name) VALUES(%s,%s,%s,%s)',(host,location,date,name)) #refine later
-    if (date != None and location != None):
+    curs.execute('INSERT INTO event(host_id, location, event_date, event_name) VALUES(%s,%s,%s,%s)',(host,location,date,name)) 
+
+    # retrieves the EID of the event
+    curs.execute('SELECT LAST_INSERT_ID()')
+    row = curs.fetchone()
+    EID = row.get('LAST_INSERT_ID()') #retrieves the newly created EID
+
+    # Adds the event to the team's players' events list by automatically marking them as "yes"
+    curs.execute('INSERT INTO attend(EID,UID,status) SELECT %s, PID, \'y\' FROM player WHERE TEAM = %s',(EID, host))
+    print "Added associated players to event"
+    
+    response = ""
+    if (location != "None"):
         response = "<div class='container'><div class='panel panel-default'> \n <div class='panel-body'>"
         response += "<p>Your event <em>" + name + "</em> on " + date + " at <em>" + location + "</em> has been created"
         response +="</div></div></div>"
-        return response
-    else:
-        return ""
+    return response
 
 ''' Creates a database connection. '''
 def connect():
