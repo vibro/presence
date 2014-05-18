@@ -11,12 +11,11 @@ import headerUtils
 def render_webpage(template,string):
     str = cgi_utils_sda.file_contents(template)
     navbar = headerUtils.make_navbar()
-    return str.format(navbar=navbar,response=string)
+    return str.format(navbar=navbar,string=string)
 
 
 if __name__ == "__main__":
     headerUtils.redirect()
     form_data = cgi.FieldStorage()
-    return createEvent.submit(form_data) #creates an event for a team
     print headerUtils.print_header("Create Event")
-    print render_webpage('createEvent.html',main())
+    print render_webpage('createEvent.html',createEvent.submit(form_data))

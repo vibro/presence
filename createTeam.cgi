@@ -18,6 +18,5 @@ def render_webpage(template,string):
 if __name__ == "__main__":
     headerUtils.redirect()
     form_data = cgi.FieldStorage()
-
     print headerUtils.print_header("Create Team")
     print render_webpage('createTeam.html',createTeam.submit(form_data))

@@ -30,15 +30,17 @@ def submit(form_data):
     name = cgi.escape(str(form_data.getfirst("teamName")))
     location = cgi.escape(str(form_data.getfirst("location"))) 
 
-    return createTeam(manager,name,location)
-    
+    if (name, location) != ("None", "None"):
+        return createTeam(manager,name,location)
+    else:
+        return ""
     
 ''' Creates a team by executing a SQL insert statement.'''
 def createTeam(manager,name,loc):
     global curs
     curs.execute('INSERT INTO team(manager,name, location) VALUES(%s,%s,%s)',(manager, name, loc))
     
-    if (name != None):
+    if (name != "None"):
         return "<div class='alert alert-success'>Your team <em>" + name + "</em> has been created. Now you can <a href='./addMember.cgi'>add some members</a>!</div>"
     else:
         return "<div class='alert alert-danger'> Uh oh! Something went wrong when creating your team. Double check your inputs!</div>"

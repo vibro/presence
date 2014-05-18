@@ -54,11 +54,13 @@ def createEvent(host,date,name,location):
     # Adds the event to the team's players' events list by automatically marking them as "yes"
     curs.execute('INSERT INTO attend(EID,UID,status) SELECT %s, PID, \'y\' FROM player WHERE TEAM = %s',(EID, host))
     
-    response = ""
+
     if (location != "None"):
-        response = "<div class='container'><div class='panel panel-default'> \n <div class='panel-body'>"
+        response = "<div class='alert alert-success'>"
         response += "<p>Your event <em>" + name + "</em> on " + date + " at <em>" + location + "</em> has been created"
-        response +="</div></div></div>"
+        response +="</div>"
+    else:
+        response = "<div class='alert alert-danger'> Uh oh! Something went wrong. Check your inputs again. </div>"
     return response
 
 ''' Creates a database connection. '''

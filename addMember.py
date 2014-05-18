@@ -24,13 +24,13 @@ def submit(form_data):
 
     # Retrieve and escape the necessary data to insert into the database
     tid = form_data.getfirst("tid")
-    email = form_data.getfirst("email")
+    email = cgi.escape(str(form_data.getfirst("email")))
     type = form_data.getfirst("type")
     
-    if (email == None or email == None):
-        print("<p>Please input proper team id or email")
+    if (tid == None or email == None):
+        return "<div class='alert alert-danger'>Please input proper team id or email</div>"
     else:
-        addMember(tid,email,type)
+        return addMember(tid,email,type)
         
         
     
@@ -39,29 +39,29 @@ def submit(form_data):
 def addMember(tid,email,type):
     global curs
     if not existsUser(email):
-        print("<p>Account with this email does not exist")
+        return "<div class='alert alert-danger'> Account with this email does not exist</div>"
         #TODO send email with invitation to application?
     elif not existsTeam(tid):
-        print("<p>Team with that id does not exist")
+        return "<div class='alert alert-danger'> Team with that id does not exist</div>"
     else:
         curs.execute('SELECT UID from user where email=%s', (email,))
         row = curs.fetchone()
         pid = row['UID']
         if (type == "player"):
+            #We should probably check to see whether this player's already on the team's roster
+
             #insert player into player table
-            
             curs.execute('INSERT into player(PID,team) values(%s,%s)', 
                          (pid,tid))
 
-            print("<p>Added player to the team!")
-                
+            return "<div class='alert alert-success'>Added player to the team! <div>"
         elif (type == "coach"):
             #update team to have a different coach
             curs.excute('INSERT into coach(CID,team) values(%s,%s)',(pid,tid))
-            print("<p>Added a coach to the team!")
+            return "<div class='alert alert-success'>Added coach to the team! <div>"
         elif (type == "manager"):
             curs.execute('UPDATE team set manager = %s',(pid))
-            print("<p>Manager changed for team")
+            return "<div class='alert alert-success'>Manager changed for the team! <div>"
 
 ''' Checks if user exists by email address.'''
 ''' No two users can have the same email'''
