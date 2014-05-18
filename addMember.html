@@ -6,29 +6,56 @@
  
 <p>{string}
 <p>Add a player to your team by inputting your team id and the player's email.
-<form method="GET" action="addMember.cgi">
+<form class="form-horizontal" role="form" method="GET" action="addMember.cgi">
 
   <fieldset>
     <legend>User Info</legend>
-    <table>
-      <tr><td>Team ID<input type="text" name="tid"></td></tr>
-      
-      <tr><td>Email<input type="text" name="email" value="tori@email.com"></td></tr>
-      <tr><td>Type
-    
-	  <select name="type">
-	    <option value="player">Player</option>
-	    <option value="coach">Coach</option>
-	    <option value="manager">Team Manager</option>
-	  </select>
-	  </td></tr>
-    </table>
-  </fieldset>
+
+	<div class="panel panel-default">
+	  <div class="panel-body">
+
+	    <label class="col-sm-2 control-label"> Team ID: </label>
+	    <div class="input-group">
+	      <input type="text" class="form-control" name="tid" value="24" required>
+	    </div> <!-- end of input group-->
+
+
+	    <label class="col-sm-2 control-label"> Player Email: </label>
+	    <div class="input-group">
+	      <input type="text" class="form-control" name="email" value="harry@hogwarts.com" required>
+	    </div> <!-- end of input group-->
+
+
+	    <label class="col-sm-2 control-label"> Type: </label>
+	    <div class="input-group">
+	      <select name="type">
+
+		<option value="player">Player</option>
+		<option value="coach">Coach</option>
+		<option value="manager">Team Manager</option>
+	      </select>
+	    </div>
+
+
+	    <label class="col-sm-2 control-label"> Position: </label>
+	    <div class="input-group">
+	      <input type="text" class="form-control" name="position" value="seeker" >
+	    </div> <!-- end of input group-->
+	    
+	  </div> <!-- end of panel body -->
+	</div>
+
+      </fieldset>
   
 
   <input type="submit" value="submit">
   
 </form>  
 </div> 
+
+<div class="container">
+  {string}
+</div>
+
 </body>
 </html>

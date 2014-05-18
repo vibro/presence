@@ -53,7 +53,6 @@ def createEvent(host,date,name,location):
 
     # Adds the event to the team's players' events list by automatically marking them as "yes"
     curs.execute('INSERT INTO attend(EID,UID,status) SELECT %s, PID, \'y\' FROM player WHERE TEAM = %s',(EID, host))
-    print "Added associated players to event"
     
     response = ""
     if (location != "None"):
