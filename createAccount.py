@@ -34,34 +34,34 @@ def submit(form_data):
     if (password != passcheck):
         return "<div class='alert alert-danger'>Passwords do not match! </div>"
     elif (password != None):
-        createAccount(name,dob,email,phnum,nickname,password)
-        return "trying to create account" #debugging
+        return createAccount(name,dob,email,phnum,nickname,password)
+        #return "trying to create account" #debugging
         
         
     
 ''' Creates an account by executing a SQL insert statement.'''
 
 def createAccount(name,dob,email,phnum,nickname,password):
-    print "top of the createAccount method"
+    # print "top of the createAccount method"
     global curs
     if existsUser(email):
-        print "user already exists" #debugging
-        return "<div class='alert alert-danger'> Account with this email already exists </div>)"
+         return "<div class='alert alert-danger'> Account with this email already exists </div>"
     else:
-        print "inserting account" #debugging
+        #print "inserting account" #debugging
         curs.execute('INSERT INTO user(email,name,dob,phnum,nickname) values(%s, %s, %s, %s, %s)', (email,name,dob,phnum,nickname))
 
         statement = "password('"+password+"')"
 
-        print statement
-        # Modifications
+        #print statement
+        
+        # Find the UID of the newly created account and add the password to it
         curs.execute('SELECT LAST_INSERT_ID()')
         uid = curs.fetchone().get("LAST_INSERT_ID()")
 
         curs.execute('INSERT into userpass values(%s, %s)',(uid,statement))
         
-        print("<p>Inserted user and password!")
-        print ("<p>Your account has been created")
+        #print("<p>Inserted user and password!")
+        #print ("<p>Your account has been created")
         retrieveUser(uid)  
 
         return "<div class='alert alert-success'> Your account has been created! </div>"
@@ -84,7 +84,7 @@ def existsUser(email):
     global curs
     curs.execute('Select UID from user where email=%s',(email,))
     row = curs.fetchone()
-    print row
+    # print row
     if row == None:
         return False
     else: return True
@@ -95,7 +95,7 @@ def retrieveUser(UID):
                  +'from user where UID=%s'),(UID,))
     row = curs.fetchone()
     if row == None:
-        print("<p> The data was not inserted correctly")
+        print "<div class='alert alert-danger'> The data was not inserted correctly</div>"
     else:
         line = ("<p>Inserted into the database was this user: \n "+
                 "<li>UID: {UID} \n"+
@@ -104,14 +104,18 @@ def retrieveUser(UID):
                 "<li>dob: {dob} \n"+
                 "<li>phnum: {phnum} \n"+
                 "<li>nickname: {nickname} \n").format(**row)
-        print line
+        # print line
+
+    #Password Check
     curs.execute(('SELECT password from userpass where id=%s'),(UID,))
     row2 = curs.fetchone()
+
     if row2 == None:
-        print("<p> The password was not added correctly")
+         print("<p> The password was not added correctly")
+        # return "<div class='alert alert-danger'> The password was not added correctly</div>"
     else:
         line2 = ("<p>The password for this account is: {password}").format(**row2)
-        print line2
+        # print line2
 
 
     
