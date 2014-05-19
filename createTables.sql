@@ -11,7 +11,7 @@ create table user(
 drop table if exists userpass;
 create table userpass(
        id       int primary key,
-       password char(40),   
+       password char(50),   
        foreign key (id) references user(UID)
 );
 
