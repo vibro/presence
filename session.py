@@ -99,12 +99,28 @@ def setTeam(TID):
 def getTeamFromSession():
     session = getSessionId()
     curs = cursor(connect())
-    curs.exectue('SELECT TID from session where sessid=%',(session,))
+    curs.execute('SELECT TID from session where sessid=%s',(session,))
     row = curs.fetchone()
     if row == None:
         return ""
     else:
-        return row['TID']
+        return str(row['TID'])
+
+def setStatus(status):
+    session = getSessionId()
+    curs = cursor(connect())
+    curs.execute('UPDATE session set status=%s where sessid=%s',(status,session))
+    
+def getStatus():
+    session = getSessionId()
+    curs = cursor(connect())
+    curs.execute('SELECT status from session where sessid=%s',(session,))
+    row = curs.fetchone()
+    if row == None:
+        return ""
+    else:
+        return str(row['status'])
+
 
 ''' Creates a database connection. '''
 def connect():

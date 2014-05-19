@@ -25,8 +25,9 @@ def logged_status():
     else: 
         return True
 
-def redirect(cookie=None):
+def redirect(cookie=None,location="Location:login.cgi"):
     if logged_status():
         cgi_utils_sda.print_headers(cookie)
     else:
-        cgi_utils_sda.print_headers(cookie,"Location:login.cgi")
+        cgi_utils_sda.print_headers(cookie,location)
+
