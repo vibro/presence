@@ -28,11 +28,13 @@ def submit(form_data):
     #retrieves the data from the form for the sql query
     id = form_data.getfirst("TID")
     
-    
-    return getRoster(str(id))
+    if (id != None):    
+        return getRoster(str(id))
+    else:
+        return ""
 
 
-# Fetches the events of a given team
+# Fetches the events of a given team and prints them in a striped table
 def getRoster(id):
     global curs
     
@@ -45,8 +47,8 @@ def getRoster(id):
     
 
     # HTML Formatting below 
-    header = "<div class=\"container\"><h2> Roster for team with ID:" + str(id) + "</h2> \n <hr>"
-    tableHead = "<table class=\"table table-striped\"> <tr> \n <th> PID </th> \n <th> Player Name </th> \n </tr>"
+    header = "<div class=\"panel panel-default\"><div class='panel-heading'> Roster for team no. " + str(id) +  "</div>"
+    tableHead = "<table class=\"table table-striped\"> <thead><tr> \n <th> PID </th> \n <th> Player Name </th> \n </tr></thead>"
     tableEnd = "</table></div>"
 
     lines = []    
@@ -56,9 +58,6 @@ def getRoster(id):
         #print "<p>curs.fetchone: " #debugging
         #print row #debugging
 
-        '''Advanced functionality of this would include using JSON to provide a sortable view of the events. We can implement this
-        In the future.'''
-        
         if row == None:
             # print "<h2> Events </h2>" + "\n".join(lines) #debugging 
             return header + tableHead + "\n".join(lines) + tableEnd

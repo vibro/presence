@@ -12,7 +12,7 @@ import headerUtils
 def render_webpage(template,string):
     str = cgi_utils_sda.file_contents(template) 
     navbar= headerUtils.make_navbar()
-    return str.format(navbar=navbar,response=string)
+    return str.format(navbar=navbar,string=string)
 
 def main():
     # Conditionals that determine what action to take

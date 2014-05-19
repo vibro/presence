@@ -25,24 +25,23 @@ def submit(form_data):
     
     #retrieves the data from the form for the sql query
     id = form_data.getfirst("UID")
-    
-    
-    return getTeam(str(id))
+
+    if (id != None):
+        return getTeam(str(id))
+    else:
+        return ""
 
 
-# Fetches the events of a given team
+# Fetches the roster of a given team and outputs results in HTML
 def getTeam(id):
     curs = cursor(connect())
     
-    #print "<p> right outside of checking for view: " #debugging
-    #print view #debugging
-    #user event query
-    
-    #print "<p>hello! Querying for user events for id No. " + id #debugging
+    #Querying for the players on the team
     curs.execute('select name,TID from team inner join player where player.team=TID and PID=%s',(id,))
     
 
     # HTML Formatting below 
+
     header = "<div class=\"container\"><h2> Teams for user with ID:" + str(id) + "</h2> \n <hr>"
     tableHead = "<table class=\"table table-striped\"> <tr> \n <th> TID </th> \n <th> Team Name </th> \n <th> </th> \n </tr>"
     tableEnd = "</table></div>"
@@ -54,9 +53,6 @@ def getTeam(id):
         #print "<p>curs.fetchone: " #debugging
         #print row #debugging
 
-        '''Advanced functionality of this would include using JSON to provide a sortable view of the events. We can implement this
-        In the future.'''
-        
         if row == None:
             # print "<h2> Events </h2>" + "\n".join(lines) #debugging 
             return header + tableHead + "\n".join(lines) + tableEnd

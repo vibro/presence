@@ -4,33 +4,46 @@
 chmod a+rx *.cgi
 chmod og-w *.cgi
 
-cp -p createTeam.cgi ../.
-cp -p createTeam.py ../.
-cp -p createTeam.html ../.
+cp createTeam.cgi ../.
+cp createTeam.py ../.
+cp createTeam.html ../.
 
-cp -p createEvent.cgi ../.
-cp -p createEvent.py ../.
-cp -p createEvent.html ../.
+cp createEvent.cgi ../.
+cp createEvent.py ../.
+cp createEvent.html ../.
 
-cp -p createAccount.cgi ../.
-cp -p createAccount.py ../.
+cp createAccount.cgi ../.
+cp createAccount.py ../.
+cp createAccount.html ../.
 
-cp -p addMember.cgi ../.
-cp -p addMember.py ../.
+cp addMember.cgi ../.
+cp addMember.py ../.
+cp addMember.html ../.
 
-cp -p dbconn.py ../.
-cp -p rugsbee_dsn.py ../.
+cp dbconn.py ../.
+cp rugsbee_dsn.py ../.
 
-cp -p viewEvents.cgi ../.
-cp -p viewEvents.py ../.
-cp -p viewEvents.html ../.
+cp viewEvents.cgi ../.
+cp viewEvents.py ../.
+cp viewEvents.html ../.
 
-cp -p viewTeams.cgi ../.
-cp -p viewTeams.py ../.
+cp viewTeams.cgi ../.
+cp viewTeams.py ../.
+cp viewTeams.html ../.
 
-cp -p viewRoster.cgi ../.
-cp -p viewRoster.py ../.
+cp viewRoster.cgi ../.
+cp viewRoster.py ../.
+cp viewRoster.html ../.
 
+cp userDashboard.cgi ../.
+cp userDash.html ../.
+
+cp managerDashboard.cgi ../.
+cp managerDash.html ../.
+
+cp navbar.html ../.
+
+cp index.html ../.
 
 cp -p update-presence ../.
 

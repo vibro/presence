@@ -10,27 +10,24 @@
   <p class="lead"> View the teams you are a member of! Input your ID, and hit submit. </p>
 
 <!-- REMEMBER TO CHANGE THIS TO THE RIGHT LINK-->   
-    <form method=GET action="viewTeams.cgi">
+    <form method=GET action="viewTeams.cgi" class="form-inline">
 
       <fieldset>
 	<legend><span>View Teams</span></legend>
-	<table>
-	  <tr><td>User ID:</label></td><td><input type="text" name="UID" value="1"></td></tr>
-	</table>
+	  <label>User ID: </label><input type="text" name="UID" value="1">
+	<input type='submit' name='submit' value='View Teams' class="btn">
       </fieldset>
-      <p>
-	<!-- <input type='button' value='New Form' onClick="window.location='viewEvents.cgi'"> -->
-	<input type='submit' name='submit' value='View Teams'>
+
     </form>
 
 <div class="container" id="events">
-
-{response}
-
+<br>
+{string}
 
 <!-- return the data here!-->
 </div>
 
 </div> <!-- /.container -->
+
     </body>
 </html>

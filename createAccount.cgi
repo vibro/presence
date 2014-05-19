@@ -16,8 +16,8 @@ def render_webpage(template,string):
 if __name__ == "__main__":
     headerUtils.redirect()
     form_data = cgi.FieldStorage()
-    createAccount.submit(form_data) 
+
 
     print headerUtils.print_header("Create a New Account")
-    print render_webpage('createAccount.html',"")
+    print render_webpage('createAccount.html',createAccount.submit(form_data))
     

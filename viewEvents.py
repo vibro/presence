@@ -102,30 +102,29 @@ def printAttendance(form_data):
 def printUserTable(id):
     global curs
     #execute the SQL query
-    curs.execute('SELECT * FROM event,(SELECT * FROM attend WHERE UID = %s) as userEv where userEv.EID = event.EID', (id,))
+    curs.execute('SELECT * FROM (SELECT event.EID, host_id, location, event_date, event_name, status FROM event,(SELECT * FROM attend WHERE UID = %s) as userEv where userEv.EID = event.EID) as ev, team where ev.host_id = TID', (id,))
 
-        # HTML Formatting below 
-    header = "<div class=\"container\"><h2> Events for User no. " + str(id) +  "</h2> \n <hr>"
-    tableHead = "<table class=\"table table-striped\"> <thead> <tr> \n <th> host_id </th> \n <th> location </th> \n <th> event_date </th> \n <th> Attend?</th> </tr> </thead>"
+    
+    # HTML Formatting below 
+    header = "<div class=\"panel panel-default\"><div class='panel-heading'> Events for User no. " + str(id) +  "</div>"
+    tableHead = "<table class=\"table table-striped\"> <thead> <tr> \n <th> Team Name </th> \n <th> Location </th> \n <th> Event Date </th> \n <th> Attend?</th> </tr> </thead>"
     tableEnd = "</table></div>"
 
     lines = []    
 
     while True:
         row = curs.fetchone()
-        #print "<p>curs.fetchone: " #debugging
-        #print row #debugging
+
 
         '''Advanced functionality of this would include using JSON to 
         provide a sortable view of the events. We can implement this
         in the future.'''
-        
+
         if row == None:
             # print "<h2> Events </h2>" + "\n".join(lines) #debugging 
             return header + tableHead + "\n".join(lines) + tableEnd
-                
-        # Later, perhaps modularize this to print out multiple rows of data
-        lines.append("<tr>" + "<td>" +  str(row.get('host_id')) + "</td>") #displays the hosting team
+
+        lines.append("<tr>" + "<td>" +  str(row.get('name')) + "</td>") #displays the hosting team
         lines.append("<td>" + str(row.get('location')) + "</td>") #displays the event location
         lines.append("<td>" + str(row.get('event_date')) + "</td>") #displays the event date
         lines.append(printAttendRadio(id,str(row.get('EID')),str(row.get('status'))) + "</td></tr>\n") 
@@ -134,27 +133,27 @@ def printUserTable(id):
 # HTML method Prints the form and the table header for the team table.
 def printTeamTable(id):
     global curs
-    #execute the SQL query
-    curs.execute('SELECT * FROM event WHERE host_id = %s', (id,))
-
+    #execute the SQL query that retrieves the events associated with the team
+    curs.execute('SELECT * FROM event, team WHERE host_id = %s and TID = %s', (id, id))
+    
         # HTML Formatting below 
-    header = "<div class=\"container\"><h2> Events for team no. " + str(id) +  "</h2> \n <hr>"
-    tableHead = "<table class=\"table table-striped\"> <thead> <tr> \n <th> host_id </th> \n <th> location </th> \n <th> event_date </th> \n <th> </th> </tr> </thead>"
+    header = "<div class=\"panel panel-default\"><div class='panel-heading'> Events for Team no. " + str(id) +  "</div>"
+    tableHead = "<table class=\"table table-striped\"> <thead> <tr> \n <th> Team Name </th> \n <th> Location </th> \n <th> Event Date </th> \n <th> </th> </tr> </thead>"
     tableEnd = "</table></div>"
 
     lines = []    
 
     while True:
-        row = curs.fetchone()
-        #print "<p>curs.fetchone: " #debugging
-        #print row #debugging
+
+        row = curs.fetchone() 
+        print "<p>curs.fetchone: " #debugging
+        print row #debugging
         
         if row == None:
             # print "<h2> Events </h2>" + "\n".join(lines) #debugging 
             return header + tableHead + "\n".join(lines) + tableEnd
-                
-        # Later, perhaps modularize this to print out multiple rows of data
-        lines.append("<tr>" + "<td>" +  str(row.get('host_id')) + "</td>") #displays the hosting team
+
+        lines.append("<tr>" + "<td>" +  str(row.get('name')) + "</td>") #displays the hosting team
         lines.append("<td>" + str(row.get('location')) + "</td>") #displays the event location
         lines.append("<td>" + str(row.get('event_date')) + "</td>") #displays the event date
         lines.append("<td><form method=\"post\" action=\"viewEvents.cgi\" class=\"form-inline\">")
@@ -169,25 +168,25 @@ def updateAttendance(form_data):
     UID = form_data.getfirst("user") #gets the userID, later might not be needed because of sessions
     EID = form_data.getfirst("event") #gets the eventID for updating database
 
-    print "EID" + str(EID)
-    print "UID" + str(UID)
+   # print "EID" + str(EID) #debugging
+   # print "UID" + str(UID) #debugging
 
     global curs
-    msg =""
+    msg ="<div class='alert alert-success'>Attendance successfuly changed. "
     if (response == "yes"):
-        msg = "<p>yes, I'm coming to event number " + EID
+        msg += " You are attending to event number " + EID
 #insert into the attend table that the user is attending the event
         curs.execute('UPDATE attend SET status = \'y\' where EID = %s and UID = %s', (EID,UID))
         
         #execute a sql query
     if (response == "no"):
-        msg = "<p>no, I'm busy. Removing my presence from event number " + EID
+        msg += " You are not attending event number " + EID
         curs.execute('UPDATE attend SET status = \'n\' where EID = %s and UID = %s', (EID,UID))
 
     if (response == "maybe"):
-        msg = "<p> I may be present."
+        msg += " You may be present."
         curs.execute('UPDATE attend SET status = \'m\' where EID = %s and UID = %s', (EID,UID))
-    return msg + "<p>end of updateAttendance"
+    return msg + "</div>"
             #do nothing
     # if yes, then add the event and the user to the attends table
     # if no, then delete the event and the user from the table
