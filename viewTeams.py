@@ -13,18 +13,16 @@ from rugsbee_dsn import DSN
 import dbconn
 import cgi
 import cgi_utils_sda
+import dashboard
+import session
 
-global conn #declaring global conn
-global curs #declaring global
+
 
 ''' Called on submit '''
 def submit(form_data):
     #print "submit method in createTeam.py"
     #connect to the database
-    global conn, curs
-    conn = connect()
-    curs = conn.cursor(MySQLdb.cursors.DictCursor)
-
+    
     #retrieves the data from the form for the sql query
     id = form_data.getfirst("UID")
     
@@ -34,7 +32,7 @@ def submit(form_data):
 
 # Fetches the events of a given team
 def getTeam(id):
-    global curs
+    curs = cursor(connect())
     
     #print "<p> right outside of checking for view: " #debugging
     #print view #debugging
@@ -46,7 +44,7 @@ def getTeam(id):
 
     # HTML Formatting below 
     header = "<div class=\"container\"><h2> Teams for user with ID:" + str(id) + "</h2> \n <hr>"
-    tableHead = "<table class=\"table table-striped\"> <tr> \n <th> TID </th> \n <th> Team Name </th> \n </tr>"
+    tableHead = "<table class=\"table table-striped\"> <tr> \n <th> TID </th> \n <th> Team Name </th> \n <th> </th> \n </tr>"
     tableEnd = "</table></div>"
 
     lines = []    
@@ -62,10 +60,31 @@ def getTeam(id):
         if row == None:
             # print "<h2> Events </h2>" + "\n".join(lines) #debugging 
             return header + tableHead + "\n".join(lines) + tableEnd
+        TID = str(row['TID'])
+        status = checkTeam(TID)
+        # TODO: Implement JS so that TID is set in session table
+        # When proper link is clicked
         lines.append("<tr>" + "<td>" +  str(row.get('TID')) + "</td>")
-        lines.append("<td>" + row.get('name') + "</td>" + "</tr>")
+        lines.append("<td>" + row.get('name') + "</td>")
+        if (status == "manager") or (status == "coach"):
+            lines.append("<td>" + "<a href='managerDashboard.cgi?TID="+TID+"'>Manage Team</a>" + "</td>" + "</tr>")
+        elif (status == "player"):
+            lines.append("<td>" + "<a href='playerDashboard.cgi?TID="+TID+"'>View Team</a>" + "</td>" + "</tr>")
+           
         # print lines #debugging
-        
+    
+
+def checkTeam(TID):
+    UID = session.getUserFromSession()
+    if (dashboard.isManager(UID,TID)):
+        return "manager"
+    elif (dashboard.isCoach(UID,TID)):
+        return "coach"
+    elif (dashboard.isMember(UID,TID)):
+        return "player"
+    else:
+        return ""
+
 
 ''' Creates a database connection. '''
 def connect():
@@ -73,3 +92,8 @@ def connect():
     conn = dbconn.connect(DSN)
     conn.autocommit(True)
     return conn
+
+def cursor(conn):
+    curs = conn.cursor(MySQLdb.cursors.DictCursor)
+    return curs
+

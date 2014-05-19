@@ -24,6 +24,8 @@ def render_webpage(template,TID):
 
 if __name__ == "__main__":
     headerUtils.redirect()
+    form_data=cgi.FieldStorage()
+    TID = form_data.getfirst("TID")
     print headerUtils.print_header("Manager Dashboard")
-    print render_webpage('managerDash.html',"1")
+    print render_webpage('managerDash.html',TID)
     

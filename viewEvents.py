@@ -4,7 +4,8 @@
 May be merged with other modules later. 
 
 Created by Lulu Ye - May 2014'''
-
+#TODO: be able to view one team's events from a user standpoint
+# ie, only show team 1 but allow user to update attendance
 
 import MySQLdb
 from rugsbee_dsn import DSN 

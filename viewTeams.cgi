@@ -15,15 +15,16 @@ def render_webpage(template,string):
     return str.format(navbar=navbar,response=string)
 
 def main():
-  # Conditionals that determine what action to take
+    # Conditionals that determine what action to take
   #cgi.test()
-  
-  global form_data
-  form_data = cgi.FieldStorage()
-  return viewTeams.submit(form_data) #returns an html representation of the events
+    
+    global form_data
+    form_data = cgi.FieldStorage()
+    return viewTeams.submit(form_data) #returns an html representation of the events
 
 
 if __name__ == "__main__":
     headerUtils.redirect()
     print headerUtils.print_header("View Your Teams")  
     print render_webpage('viewTeams.html',main()) 
+    

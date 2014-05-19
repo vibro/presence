@@ -63,6 +63,10 @@ def getUserFromSession():
     UID = getUser(str(cookie.value))
     return UID
 
+def getSessionId():
+    cookie = cgi_utils_sda.getCookieFromRequest("SESSID")
+    return str(cookie.value)
+
 def checkPass(uid,password):
     curs = cursor(connect())
     curs.execute('SELECT * from userpass where id=%s',(uid,))
@@ -86,6 +90,21 @@ def checkPass(uid,password):
     else:
         #print "password incorrect"
         return False
+
+def setTeam(TID):
+    curs = cursor(connect())
+    session = getSessionId()
+    curs.execute('UPDATE session set TID=%s where sessid=%s',(TID,session))
+
+def getTeamFromSession():
+    session = getSessionId()
+    curs = cursor(connect())
+    curs.exectue('SELECT TID from session where sessid=%',(session,))
+    row = curs.fetchone()
+    if row == None:
+        return ""
+    else:
+        return row['TID']
 
 ''' Creates a database connection. '''
 def connect():
