@@ -74,6 +74,7 @@ def checkPass(uid,password):
     curs = cursor(connect())
     curs.execute('SELECT * from userpass where id=%s',(uid,))
     row = curs.fetchone()
+    origpass = ""
     if row != None:
         
         uid = row['id']

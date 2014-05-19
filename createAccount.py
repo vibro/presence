@@ -61,7 +61,7 @@ def createAccount(name,dob,email,phnum,nickname,password):
         curs.execute('SELECT LAST_INSERT_ID()')
         uid = curs.fetchone().get("LAST_INSERT_ID()")
 
-        curs.execute('INSERT into userpass values(%s, %s)',(uid,statement))
+        curs.execute('INSERT into userpass values(%s, password(%s))',(uid,password))
         
         #print("<p>Inserted user and password!")
         #print ("<p>Your account has been created")

@@ -1,0 +1,47 @@
+<body>
+{navbar}
+<div class="container"> 
+
+<h1>Update Settings</h1>
+ 
+<form class="form-horizontal" role="form" method="POST" action="userSettings.cgi">
+
+  <fieldset>
+    <legend>User Info</legend>
+    <p>Change your password
+	<div class="panel panel-default">
+	  <div class="panel-body">
+
+	    
+	    <label class="col-sm-2 control-label"> Password: </label>
+	    <div class="input-group">
+	      <input type="text" class="form-control" name="password" required>
+	    </div> <!-- end of input group-->
+
+
+	    <label class="col-sm-2 control-label"> Password Check: </label>
+	    <div class="input-group">
+	      <input type="text" class="form-control" name="passcheck" required>
+	    </div>
+	    
+	    
+	  </div>
+	</div>
+	
+</fieldset>
+
+<input type="submit" value="submit">
+
+
+
+</form>  
+</div> 
+
+<div class="container">
+<br>
+<br>
+  {string}
+</div>
+
+</body>
+</html>
