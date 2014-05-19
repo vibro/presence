@@ -11,7 +11,7 @@ def makeButtons(UID):
     buttons='''
     <p><a class="btn btn-primary btn-lg" href="viewTeams.cgi?UID='''+UID+'''" role="button">My Teams</a>
     <p><a class="btn btn-primary btn-lg" href="viewEvents.cgi?view=user&ID='''+UID+'''" role="button">My Events</a>
-    <p><a class="btn btn-primary btn-lg" href="index.html" role="button">Settings</a>
+    <p><a class="btn btn-primary btn-lg" href="userSettings.cgi" role="button">Settings</a>
 '''
     return buttons
 
