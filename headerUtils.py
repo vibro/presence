@@ -13,12 +13,16 @@ def make_navbar():
     str = cgi_utils_sda.file_contents("navbar.html")
     type = session.getStatus()
     team = session.getTeamName()
-    if type == "m" or type == "c":
+    
+    if type == "m" or type == "c" and team != "None":
         dashboard = "<li><a href='managerDashboard.cgi'>Manage Team: "+team+"</a></li>"
-    elif type == "p":
+        switch = "<li><a href='viewTeams.cgi'>Switch Team </a></li>"
+    elif type == "p" and team != "None":
         dashboard = "<li><a href='playerDashboard.cgi'>View Team: "+team+"</a></li>"
+        switch = "<li><a href='viewTeams.cgi'>Switch Team </a></li>"
     else:
         dashboard = ""
+        switch = ""
     
     
         
@@ -28,7 +32,7 @@ def make_navbar():
         status = "ogout"
     else:
         status = "ogin"
-    return str.format(dashboard=dashboard,status=status,team=team)
+    return str.format(dashboard=dashboard,status=status,team=team,switch=switch)
 
 def logged_status():
     cookie = cgi_utils_sda.getCookieFromRequest("SESSID")
