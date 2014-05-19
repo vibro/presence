@@ -171,21 +171,21 @@ def updateAttendance(form_data):
    # print "UID" + str(UID) #debugging
 
     global curs
-    msg =""
+    msg ="<div class='alert alert-success'>Attendance successfuly changed. "
     if (response == "yes"):
-        msg = "<p>yes, I'm coming to event number " + EID
+        msg += " You are attending to event number " + EID
 #insert into the attend table that the user is attending the event
         curs.execute('UPDATE attend SET status = \'y\' where EID = %s and UID = %s', (EID,UID))
         
         #execute a sql query
     if (response == "no"):
-        msg = "<p>no, I'm busy. Removing my presence from event number " + EID
+        msg += " You are not attending event number " + EID
         curs.execute('UPDATE attend SET status = \'n\' where EID = %s and UID = %s', (EID,UID))
 
     if (response == "maybe"):
-        msg = "<p> I may be present."
+        msg += " You may be present."
         curs.execute('UPDATE attend SET status = \'m\' where EID = %s and UID = %s', (EID,UID))
-    return msg + "<p>end of updateAttendance"
+    return msg + "</div>"
             #do nothing
     # if yes, then add the event and the user to the attends table
     # if no, then delete the event and the user from the table

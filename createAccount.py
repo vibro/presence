@@ -31,7 +31,10 @@ def submit(form_data):
     password = cgi.escape(str(form_data.getfirst("pass")))
     passcheck = cgi.escape(str(form_data.getfirst("passcheck")))
     
-    if (password != passcheck):
+    if (name == "None"):
+        # If there is no form_data, do nothing
+        return ""
+    elif (password != passcheck):
         return "<div class='alert alert-danger'>Passwords do not match! </div>"
     elif (password != None):
         return createAccount(name,dob,email,phnum,nickname,password)

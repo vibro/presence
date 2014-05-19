@@ -36,7 +36,10 @@ def submit(form_data):
     sql_date = str(year)+ "-" + str(month) + "-" + str(day)
         #print sql_date
         #creates the event, even if the sql_date is empty
-    return createEvent(host,sql_date,name,location)
+    if (host == "None"):
+        return ""
+    else:
+        return createEvent(host,sql_date,name,location)
     
     
 ''' Creates an event by executing a SQL insert statement.'''

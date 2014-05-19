@@ -22,20 +22,19 @@ def submit(form_data):
     conn = connect()
     curs = conn.cursor(MySQLdb.cursors.DictCursor)
 
-    # Retrieve and escape the necessary data to insert into the database
+        # Retrieve and escape the necessary data to insert into the database
     tid = form_data.getfirst("tid")
     email = cgi.escape(str(form_data.getfirst("email")))
     type = form_data.getfirst("type")
-    
+    sbmt = form_data.getfirst("submit")
+
     if (tid == None or email == None):
-        return "<div class='alert alert-danger'>Please input proper team id or email</div>"
+        return "" #returns blank if there is no form data
     else:
-        return addMember(tid,email,type)
-        
+        return addMember(tid,email,type)        
         
     
 ''' Creates an account by executing a SQL insert statement.'''
-
 def addMember(tid,email,type):
     global curs
     if not existsUser(email):
