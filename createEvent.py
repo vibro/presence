@@ -7,25 +7,15 @@ Currently connected to hye database due to some tabular differences between my t
 
 Created by Lulu Ye - April 2014'''
 
-
-import MySQLdb
-from rugsbee_dsn import DSN #change later to rugsbee_dsn
-import dbconn
 import cgi
 import cgi_utils_sda
-
-global conn #declaring global conn
-global curs #declaring global
+import session
 
 ''' Called on submit '''
 def submit(form_data):
-    #connect to the database
-    global conn, curs
-    conn = connect()
-    curs = conn.cursor(MySQLdb.cursors.DictCursor)
-
+    
     # Retrieve and escape the necessary data to insert into the database
-    host = str(form_data.getfirst("hostID"))
+    host = session.getTeamFromSession()
     location = cgi.escape(str(form_data.getfirst("event_loc"))) 
     name = cgi.escape(str(form_data.getfirst("event_name")))
 
@@ -36,7 +26,7 @@ def submit(form_data):
     sql_date = str(year)+ "-" + str(month) + "-" + str(day)
         #print sql_date
         #creates the event, even if the sql_date is empty
-    if (host == "None"):
+    if (location == "None" or name == "None"):
         return ""
     else:
         return createEvent(host,sql_date,name,location)
@@ -44,7 +34,7 @@ def submit(form_data):
     
 ''' Creates an event by executing a SQL insert statement.'''
 def createEvent(host,date,name,location):
-    global curs
+    curs = session.cursor(session.connect())
     
     #doesn't check whether an event is duplicated since steams may sometimes hold simultaneous events.
     curs.execute('INSERT INTO event(host_id, location, event_date, event_name) VALUES(%s,%s,%s,%s)',(host,location,date,name)) 
@@ -65,10 +55,3 @@ def createEvent(host,date,name,location):
     else:
         response = "<div class='alert alert-danger'> Uh oh! Something went wrong. Check your inputs again. </div>"
     return response
-
-''' Creates a database connection. '''
-def connect():
-    DSN['database']= 'rugsbee_db' #change later to rugsbee_db
-    conn = dbconn.connect(DSN)
-    conn.autocommit(True)
-    return conn

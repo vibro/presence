@@ -11,32 +11,29 @@ from rugsbee_dsn import DSN # change later
 import dbconn
 import cgi
 import cgi_utils_sda
-
-global conn #declaring global conn
-global curs #declaring global
+import session
 
 ''' Called on submit '''
 def submit(form_data):
     #connect to the database
-    global conn, curs
-    conn = connect()
-    curs = conn.cursor(MySQLdb.cursors.DictCursor)
+    
 
         # Retrieve and escape the necessary data to insert into the database
-    tid = form_data.getfirst("tid")
+    tid = session.getTeamFromSession()
     email = cgi.escape(str(form_data.getfirst("email")))
     type = form_data.getfirst("type")
     sbmt = form_data.getfirst("submit")
 
-    if (tid == None or email == None):
+    if (email == "None"):
         return "" #returns blank if there is no form data
     else:
+
         return addMember(tid,email,type)        
         
     
 ''' Creates an account by executing a SQL insert statement.'''
 def addMember(tid,email,type):
-    global curs
+    curs = cursor(connect())
     if not existsUser(email):
         return "<div class='alert alert-danger'> Account with this email does not exist</div>"
         #TODO send email with invitation to application?
@@ -66,7 +63,7 @@ def addMember(tid,email,type):
 ''' No two users can have the same email'''
 
 def existsUser(email):
-    global curs
+    curs = cursor(connect())
     curs.execute('Select UID from user where email=%s',(email,))
     row = curs.fetchone()
     if row == None:
@@ -74,7 +71,7 @@ def existsUser(email):
     else: return True
 
 def existsTeam(team):
-    global curs
+    curs = cursor(connect())
     curs.execute('Select TID from team where TID=%s',(team,))
     row = curs.fetchone()
     if row == None:
@@ -82,7 +79,7 @@ def existsTeam(team):
     else: return True
 
 def retrieveUser(UID):
-    global curs
+    curs = cursor(connect())
     curs.execute(('Select UID,email,name,dob,phnum,nickname ' 
                  +'from user where UID=%s'),(UID,))
     row = curs.fetchone()
@@ -114,3 +111,7 @@ def connect():
     conn = dbconn.connect(DSN)
     conn.autocommit(True)
     return conn
+
+def cursor(conn):
+    curs = conn.cursor(MySQLdb.cursors.DictCursor)
+    return curs

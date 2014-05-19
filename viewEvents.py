@@ -7,24 +7,18 @@ Created by Lulu Ye - May 2014'''
 #TODO: be able to view one team's events from a user standpoint
 # ie, only show team 1 but allow user to update attendance
 
-import MySQLdb
-from rugsbee_dsn import DSN 
-import dbconn
+
 import cgi
 import cgi_utils_sda
+import session
 
-global conn #declaring global conn
-global curs #declaring global
 
 ''' Called on submit '''
 def submit(form_data,submit_type): 
     #need a different submit_type so that it executes the right code
     #print "submit method in createTeam.py"
     #connect to the database
-    global conn, curs
-    conn = connect()
-    curs = conn.cursor(MySQLdb.cursors.DictCursor)
-    
+        
     if (submit_type == "Update Attendance"):
         #retrieves the data from the form to update the database
         return updateAttendance(form_data)
@@ -41,7 +35,7 @@ def submit(form_data,submit_type):
     
 # Fetches the events of a given team
 def getEvent(id,view):
-    global curs
+    curs = session.cursor(session.connect())
     #print "<p> right outside of checking for view: " #debugging
     #print view #debugging
     #user event query
@@ -87,7 +81,7 @@ def printAttendRadio(user,event,check):
 def printAttendance(form_data):
     EID = form_data.getfirst("event")
 
-    global curs
+    curs = session.cursor(session.connect())
     curs.execute('SELECT * from attend where EID = %s', (EID,)) #Make this so it generates the name
 
     response = "<br>Event Name <br> <table class='table table-striped'> <tr><thead> <th> User ID </th> <th> Attend? </th> </thead> </tr>"
@@ -100,7 +94,7 @@ def printAttendance(form_data):
 
 # HTML method. Print the form and the table header for the user
 def printUserTable(id):
-    global curs
+    curs = session.cursor(session.connect())
     #execute the SQL query
     curs.execute('SELECT * FROM (SELECT event.EID, host_id, location, event_date, event_name, status FROM event,(SELECT * FROM attend WHERE UID = %s) as userEv where userEv.EID = event.EID) as ev, team where ev.host_id = TID', (id,))
 
@@ -191,10 +185,3 @@ def updateAttendance(form_data):
     # if yes, then add the event and the user to the attends table
     # if no, then delete the event and the user from the table
         
-
-''' Creates a database connection. '''
-def connect():
-    DSN['database']= 'rugsbee_db'
-    conn = dbconn.connect(DSN)
-    conn.autocommit(True)
-    return conn

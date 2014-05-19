@@ -5,13 +5,15 @@ import createEvent
 import cgi_utils_sda
 import cgitb; cgitb.enable()
 import headerUtils
+import session
 
 
 '''Method that prints out the appropriate webpage'''
 def render_webpage(template,string):
     str = cgi_utils_sda.file_contents(template)
     navbar = headerUtils.make_navbar()
-    return str.format(navbar=navbar,string=string)
+    team = session.getTeamName()
+    return str.format(navbar=navbar,string=string,team=team)
 
 
 if __name__ == "__main__":

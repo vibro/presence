@@ -7,7 +7,7 @@
     <h1>Create An Event</h1>
     
 
-    <p> Create an event on Presence for your team. </p>
+    <p> Create an event on Presence for {team}. </p>
 
     <form class="form-horizontal" role="form" method=post action="createEvent.cgi">
       
@@ -15,12 +15,7 @@
 	<legend><span>Create an Event</span></legend>
 	<div class="panel panel-default">
 	  <div class="panel-body">
-	    
-	    <label class="col-sm-2 control-label"> Hosting Team ID: </label>
-	    <div class="input-group">
-	      <input type="text" class="form-control" name="hostID" value="2" required>
-	    </div> <!-- end of input group-->
-
+	  
 
 	    <label class="col-sm-2 control-label"> Event Name: </label>
 	    <div class="input-group">
@@ -95,7 +90,7 @@
 	    </select>
 </fieldset>
 <p>
-  <input type='submit' name='submit' value='Add Data'>
+  <input type='submit' name='submit' value='Create Event'>
 </form>
 </div>
 </div>

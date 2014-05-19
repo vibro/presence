@@ -15,12 +15,7 @@ def render_webpage(template,string):
     return str.format(navbar=navbar,string=string)
 
 def main():
-    # Conditionals that determine what action to take
-  #cgi.test()
-    
-    global form_data
-    form_data = cgi.FieldStorage()
-    return viewTeams.submit(form_data) #returns an html representation of the events
+    return viewTeams.submit()#returns an html representation of the events
 
 
 if __name__ == "__main__":

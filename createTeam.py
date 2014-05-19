@@ -8,23 +8,16 @@
 Created by Lulu Ye - 19 April 2014'''
 
 
-import MySQLdb
-from rugsbee_dsn import DSN 
-import dbconn
 import cgi
 import cgi_utils_sda
+import session
 
-global conn #declaring global conn
-global curs #declaring global
 
 ''' Called on submit '''
 def submit(form_data):
 #    print "submit method in createTeam.py"
     #connect to the database
-    global conn, curs
-    conn = connect()
-    curs = conn.cursor(MySQLdb.cursors.DictCursor)
-
+    
     # Retrieve and escape the necessary data to insert into the database
     manager = form_data.getfirst("teamManager")
     name = cgi.escape(str(form_data.getfirst("teamName")))
@@ -37,7 +30,7 @@ def submit(form_data):
     
 ''' Creates a team by executing a SQL insert statement.'''
 def createTeam(manager,name,loc):
-    global curs
+    curs = session.cursor(session.connect())
     curs.execute('INSERT INTO team(manager,name, location) VALUES(%s,%s,%s)',(manager, name, loc))
     
     if (name != "None"):
@@ -45,10 +38,3 @@ def createTeam(manager,name,loc):
     else:
         return "<div class='alert alert-danger'> Uh oh! Something went wrong when creating your team. Double check your inputs!</div>"
         
-
-''' Creates a database connection. '''
-def connect():
-    DSN['database']= 'rugsbee_db'
-    conn = dbconn.connect(DSN)
-    conn.autocommit(True)
-    return conn

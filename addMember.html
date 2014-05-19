@@ -2,10 +2,10 @@
 {navbar}
 <div class="container"> 
 
-<h1>Add members to your team!</h1>
+<h1>Add members to {team}!</h1>
  
-<p>Add a player to your team by inputting your team id and the player's email.
-<form class="form-horizontal" role="form" method="GET" action="addMember.cgi">
+<p>Add a player to {team} by inputting the player's email.
+<form class="form-horizontal" role="form" method="POST" action="addMember.cgi">
 
   <fieldset>
     <legend>User Info</legend>
@@ -13,20 +13,16 @@
 	<div class="panel panel-default">
 	  <div class="panel-body">
 
-	    <label class="col-sm-2 control-label"> Team ID: </label>
-	    <div class="input-group">
-	      <input type="text" class="form-control" name="tid" value="24" required>
-	    </div> <!-- end of input group-->
 
 	    <label class="col-sm-2 control-label"> Player Email: </label>
 	    <div class="input-group">
-	      <input type="text" class="form-control" name="email" value="harry@hogwarts.com" required>
+	      <input type="text" class="form-control" name="email" required>
 	    </div> <!-- end of input group-->
 
 	    
 	    <label class="col-sm-2 control-label"> Position: </label>
 	    <div class="input-group">
-	      <input type="text" class="form-control" name="position" value="seeker">
+	      <input type="text" class="form-control" name="position">
 	    </div> <!-- end of input group-->
 
 
