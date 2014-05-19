@@ -23,7 +23,18 @@ def submit(form_data):
         return "<div class='alert alert-danger'> Passwords do not match </div>"
     else:
         return updatePass(password)        
-        
+ 
+def delete():
+    UID = session.getUserFromSession()
+    curs = session.cursor(session.connect())
+    curs.execute('DELETE from user where UID=%s',(UID,))
+    curs.execute('DELETE from userpass where id=%s',(UID,))
+    curs.execute('DELETE from player where PID=%s',(UID,))
+    curs.execute('DELETE from coach where CID=%s',(UID,))
+    curs.execute('UPDATE team set manager=NULL where manager=%s',(UID,))
+    
+    line = "<div class='alert alert-danger'> Account deleted \t <a href='logout.cgi'>Return to Login</a> </div>"
+    return line
     
 ''' Creates an account by executing a SQL insert statement.'''
 def updatePass(password):

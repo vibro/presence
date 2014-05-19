@@ -17,5 +17,9 @@ if __name__ == "__main__":
     headerUtils.redirect()
     form_data = cgi.FieldStorage()
     print headerUtils.print_header("User Settings")
-    print render_webpage('userSettings.html', userSettings.submit(form_data))
-    
+    if form_data.getfirst('delete') != None:
+        print render_webpage('userSettings.html', userSettings.delete())
+    elif form_data.getfirst('submit') != None:
+        print render_webpage('userSettings.html', userSettings.submit(form_data))
+    else:
+        print render_webpage('userSettings.html', "")
