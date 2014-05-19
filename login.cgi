@@ -45,7 +45,9 @@ def logout(sessid):
 def main():
     form_data = cgi.FieldStorage()
     error = ""
-    if (form_data.getfirst('login') is not None):
+    if (form_data.getfirst('login') is not None 
+        and form_data.getfirst('email') is not None
+        and form_data.getfirst('password') is not None):
         exists,UID = save_session(form_data)
         if exists is False: 
             error = "Invalid email or password"

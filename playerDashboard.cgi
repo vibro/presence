@@ -26,8 +26,7 @@ def render_webpage(template,TID,UID):
 
 if __name__ == "__main__":
     headerUtils.redirect()
-    form_data = cgi.FieldStorage()
-    TID = form_data.getfirst('TID')
+    TID = session.getTeamFromSession()
     UID = session.getUserFromSession()
     print headerUtils.print_header("Player Dashboard")
     print render_webpage('playerDash.html',TID,UID)
