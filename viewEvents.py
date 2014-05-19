@@ -48,7 +48,8 @@ def getEvent(id,view):
     if (view == "team"):
         return printTeamTable(id)
     elif (view == "user"):
-        return printUserTable(id)
+        return printUserTableForTeam(id, "1") #testing
+        #return printUserTable(id)
     else:
         return ""
 
@@ -88,15 +89,20 @@ def printAttendance(form_data):
     EID = form_data.getfirst("event")
 
     global curs
-    curs.execute('SELECT * from attend where EID = %s', (EID,)) #Make this so it generates the name
+    curs.execute('SELECT * from attend,user where EID = %s and user.UID = attend.UID', (EID,)) #Make this so it generates the name
 
-    response = "<br>Event Name <br> <table class='table table-striped'> <tr><thead> <th> User ID </th> <th> Attend? </th> </thead> </tr>"
+    response = "<br>Event Name <br> <table class='table table-striped'> <tr><thead> <th> Name </th> <th> Attend? </th></thead> </tr>"
 
     while True:
         row = curs.fetchone()
         if row == None:
+            #count how many are attending
+            curs.execute('SELECT count(*) from attend where EID = %s and status = \'y\'', (EID,))
+            count = curs.fetchone().get("count(*)");
+            response +="<tr><td colspan='2'><strong>Total Attending: " + str(count) + "</strong><tr></td></table>"
             return response
-        response += "<tr><td>UID: " + str(row.get("UID")) + "</td><td> status: " + str(row.get("status")) + "</td></tr>"
+        response += "<tr><td>" + str(row.get("name")) + "</td><td>" + str(row.get("status")) + "</td></tr>"
+    
 
 # HTML method. Print the form and the table header for the user
 def printUserTable(id):
@@ -146,8 +152,8 @@ def printTeamTable(id):
     while True:
 
         row = curs.fetchone() 
-        print "<p>curs.fetchone: " #debugging
-        print row #debugging
+#        print "<p>curs.fetchone: " #debugging
+#        print row #debugging
         
         if row == None:
             # print "<h2> Events </h2>" + "\n".join(lines) #debugging 
@@ -160,6 +166,39 @@ def printTeamTable(id):
         lines.append("<input type=\"submit\" name=\"submit\" value=\"View Attendance\" class=\"btn\">")
         lines.append("<input type=\"hidden\" name=\"event\" value=\"" + str(row.get('EID')) + "\">\n</form></td></tr>\n") #view attending button
         #displays an optiion to view all users who are attending
+
+
+
+# HTML method. Print the form and the table header for the user for a specific team
+def printUserTableForTeam(uid,tid):
+    global curs
+    #execute the SQL query
+    curs.execute('SELECT * FROM (SELECT event_tid.EID, location, event_date, event_name, status, host_id FROM (SELECT * from event where host_id = %s) as event_tid,(SELECT * FROM attend WHERE UID = %s) as userEv where userEv.EID = event_tid.EID) as ev, team', (tid,uid))
+
+    
+    # HTML Formatting below 
+    header = "<div class=\"panel panel-default\"><div class='panel-heading'> Events for User no. " + str(uid) +  "</div>"
+    tableHead = "<table class=\"table table-striped\"> <thead> <tr> \n <th> Team Name </th> \n <th> Location </th> \n <th> Event Date </th> \n <th> Attend?</th> </tr> </thead>"
+    tableEnd = "</table></div>"
+
+    lines = []    
+
+    while True:
+        row = curs.fetchone()
+
+        '''Advanced functionality of this would include using JSON to 
+        provide a sortable view of the events. We can implement this
+        in the future.'''
+
+        if row == None:
+            # print "<h2> Events </h2>" + "\n".join(lines) #debugging 
+            return header + tableHead + "\n".join(lines) + tableEnd
+
+        lines.append("<tr>" + "<td>" +  str(row.get('name')) + "</td>") #displays the hosting team
+        lines.append("<td>" + str(row.get('location')) + "</td>") #displays the event location
+        lines.append("<td>" + str(row.get('event_date')) + "</td>") #displays the event date
+        lines.append(printAttendRadio(uid,str(row.get('EID')),str(row.get('status'))) + "</td></tr>\n") 
+
 
 
 # Updates the attendance for only one event
