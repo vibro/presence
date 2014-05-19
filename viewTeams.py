@@ -63,11 +63,12 @@ def getTeam(id):
         lines.append("<tr>" + "<td>" +  str(row.get('TID')) + "</td>")
         lines.append("<td>" + row.get('name') + "</td>")
         if (status == "manager") or (status == "coach"):
-            lines.append("<td>" + "<a href='managerDashboard.cgi?TID="+TID+"'>Manage Team</a>" + "</td>" + "</tr>")
+            lines.append("<td>" + "<a href='dashboard.cgi?TID="+TID+"'>Manage Team</a>" + "</td>" + "</tr>")
         elif (status == "player"):
-            lines.append("<td>" + "<a href='playerDashboard.cgi?TID="+TID+"'>View Team</a>" + "</td>" + "</tr>")
+            lines.append("<td>" + "<a href='dashboard.cgi?TID="+TID+"'>View Team</a>" + "</td>" + "</tr>")
            
         # print lines #debugging
+    
     
 
 def checkTeam(TID):
@@ -80,6 +81,8 @@ def checkTeam(TID):
         return "player"
     else:
         return ""
+
+
 
 
 ''' Creates a database connection. '''

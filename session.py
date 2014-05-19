@@ -65,7 +65,10 @@ def getUserFromSession():
 
 def getSessionId():
     cookie = cgi_utils_sda.getCookieFromRequest("SESSID")
-    return str(cookie.value)
+    if cookie == None:
+        return ""
+    else:
+        return str(cookie.value)
 
 def checkPass(uid,password):
     curs = cursor(connect())
@@ -98,13 +101,42 @@ def setTeam(TID):
 
 def getTeamFromSession():
     session = getSessionId()
+    if session == None:
+        return ""
     curs = cursor(connect())
-    curs.exectue('SELECT TID from session where sessid=%',(session,))
+    curs.execute('SELECT TID from session where sessid=%s',(session,))
     row = curs.fetchone()
     if row == None:
         return ""
     else:
-        return row['TID']
+        return str(row['TID'])
+
+def setStatus(status):
+    session = getSessionId()
+    if session == None:
+        return ""
+    curs = cursor(connect())
+    curs.execute('UPDATE session set status=%s where sessid=%s',(status,session))
+    
+def getStatus():
+    session = getSessionId()
+    curs = cursor(connect())
+    curs.execute('SELECT status from session where sessid=%s',(session,))
+    row = curs.fetchone()
+    if row == None:
+        return ""
+    else:
+        return str(row['status'])
+
+def getTeamName():
+    TID = getTeamFromSession()
+    curs = cursor(connect())
+    curs.execute('SELECT name from team where TID=%s',(TID,))
+    row = curs.fetchone()
+    if row == None:
+        return "None"
+    else:
+        return str(row['name'])
 
 ''' Creates a database connection. '''
 def connect():
