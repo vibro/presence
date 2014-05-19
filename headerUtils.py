@@ -11,12 +11,24 @@ def print_header(title):
 
 def make_navbar():
     str = cgi_utils_sda.file_contents("navbar.html")
-    #logged status printed so capital L on label, lower l on URL
+    type = session.getStatus()
+    team = session.getTeamName()
+    if type == "m" or type == "c":
+        dashboard = "<li><a href='managerDashboard.cgi'>Manage Team: "+team+"</a></li>"
+    elif type == "p":
+        dashboard = "<li><a href='playerDashboard.cgi'>View Team: "+team+"</a></li>"
+    else:
+        dashboard = ""
+    
+    
+        
+
+    #logged status printed so capital L on l abel, lower l on URL
     if logged_status():
         status = "ogout"
     else:
         status = "ogin"
-    return str.format(status=status)
+    return str.format(dashboard=dashboard,status=status,team=team)
 
 def logged_status():
     cookie = cgi_utils_sda.getCookieFromRequest("SESSID")
