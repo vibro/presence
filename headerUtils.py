@@ -33,11 +33,13 @@ def make_navbar():
         status = "ogout"
         userdash = "<li><a href='userDashboard.cgi'>My Dashboard</a></li>"
         settings ="<li><a href='userSettings.cgi'>Settings</a></li>"
+        index = "#"
     else:
         status = "ogin"
         userdash = ""
+        index = "index.cgi"
         settings = ""
-    return str.format(userdash=userdash,dashboard=dashboard,status=status,team=team,switch=switch,settings=settings)
+    return str.format(index=index,userdash=userdash,dashboard=dashboard,status=status,team=team,switch=switch,settings=settings)
 
 def logged_status():
     cookie = cgi_utils_sda.getCookieFromRequest("SESSID")
