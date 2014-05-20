@@ -37,6 +37,7 @@ def createTeam(manager,name,loc):
     TID = curs.fetchone().get("TID")
     session.setTeam(TID)
 
+    curs.execute('INSERT INTO player(PID,team) values(%s,%S)',(manager,TID))
     
     if (name != "None"):
         return "<div class='alert alert-success'>Your team <em>" + name + "</em> has been created. Now you can <a href='./dashboard.cgi?TID="+str(TID)+"'>manage your team</a>!</div>"
