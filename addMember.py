@@ -6,9 +6,6 @@
 Created by Tori Brown - 21 April 2014'''
 
 
-import MySQLdb
-from rugsbee_dsn import DSN # change later
-import dbconn
 import cgi
 import cgi_utils_sda
 import session
@@ -33,7 +30,7 @@ def submit(form_data):
     
 ''' Creates an account by executing a SQL insert statement.'''
 def addMember(tid,email,type):
-    curs = cursor(connect())
+    curs = session.cursor(session.connect())
     if not existsUser(email):
         return "<div class='alert alert-danger'> Account with this email does not exist</div>"
         #TODO send email with invitation to application?
@@ -63,7 +60,7 @@ def addMember(tid,email,type):
 ''' No two users can have the same email'''
 
 def existsUser(email):
-    curs = cursor(connect())
+    curs = session.cursor(session.connect())
     curs.execute('Select UID from user where email=%s',(email,))
     row = curs.fetchone()
     if row == None:
@@ -71,7 +68,7 @@ def existsUser(email):
     else: return True
 
 def existsTeam(team):
-    curs = cursor(connect())
+    curs = session.cursor(session.connect())
     curs.execute('Select TID from team where TID=%s',(team,))
     row = curs.fetchone()
     if row == None:
@@ -79,7 +76,7 @@ def existsTeam(team):
     else: return True
 
 def retrieveUser(UID):
-    curs = cursor(connect())
+    curs = session.cursor(session.connect())
     curs.execute(('Select UID,email,name,dob,phnum,nickname ' 
                  +'from user where UID=%s'),(UID,))
     row = curs.fetchone()
@@ -104,14 +101,3 @@ def retrieveUser(UID):
 
 
     
-
-''' Creates a database connection. '''
-def connect():
-    DSN['database']= 'rugsbee_db' #change later to rugsbee
-    conn = dbconn.connect(DSN)
-    conn.autocommit(True)
-    return conn
-
-def cursor(conn):
-    curs = conn.cursor(MySQLdb.cursors.DictCursor)
-    return curs

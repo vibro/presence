@@ -28,21 +28,24 @@ def submit(form_data,submit_type):
     else:
     #retrieves the data from the form for the sql query for events
         view = form_data.getfirst("view") #whether in team or user mode
-        id = form_data.getfirst("ID")
+        TID = session.getTeamFromSession()
+        UID = session.getUserFromSession()
     
     # print "view: " + view +", " + id #debugging ometimes doesn't work if id is empty
-        return getEvent(str(id),view)
+        return getEvent(str(TID),str(UID),view)
     
 # Fetches the events of a given team
-def getEvent(id,view):
+def getEvent(TID,UID,view):
     curs = session.cursor(session.connect())
     #print "<p> right outside of checking for view: " #debugging
     #print view #debugging
     #user event query
     if (view == "team"):
-        return printTeamTable(id)
+        return printTeamTable(TID)
     elif (view == "user"):
-        return printUserTable(id)
+        return printUserTable(UID)
+    elif (view == "userteam"):
+        return printUserTeamTable(UID,TID)
     else:
         return ""
 
@@ -126,7 +129,7 @@ def printUserTable(id):
 
 # HTML method Prints the form and the table header for the team table.
 def printTeamTable(id):
-    global curs
+    curs = session.cursor(session.connect())
     #execute the SQL query that retrieves the events associated with the team
     curs.execute('SELECT * FROM event, team WHERE host_id = %s and TID = %s', (id, id))
     
@@ -156,6 +159,37 @@ def printTeamTable(id):
         #displays an optiion to view all users who are attending
 
 
+def printUserTeamTable(UID,TID):
+    curs = session.cursor(session.connect())
+    #execute the SQL query that retrieves the events associated with the team
+    curs.execute('SELECT * FROM event, team WHERE host_id = %s and TID = %s', (TID,TID))
+
+ 
+    # HTML Formatting below 
+    header = "<div class=\"panel panel-default\"><div class='panel-heading'> Events for team" + str(id) +  "</div>"
+    tableHead = "<table class=\"table table-striped\"> <thead> <tr> \n <th> Team Name </th> \n <th> Location </th> \n <th> Event Date </th> \n <th> Attend?</th> </tr> </thead>"
+    tableEnd = "</table></div>"
+
+    lines = []    
+
+    while True:
+        row = curs.fetchone()
+
+
+        '''Advanced functionality of this would include using JSON to 
+        provide a sortable view of the events. We can implement this
+        in the future.'''
+
+        if row == None:
+            # print "<h2> Events </h2>" + "\n".join(lines) #debugging 
+            return header + tableHead + "\n".join(lines) + tableEnd
+
+        lines.append("<tr>" + "<td>" +  str(row.get('name')) + "</td>") #displays the hosting team
+        lines.append("<td>" + str(row.get('location')) + "</td>") #displays the event location
+        lines.append("<td>" + str(row.get('event_date')) + "</td>") #displays the event date
+        lines.append(printAttendRadio(UID,str(row.get('EID')),str(row.get('status'))) + "</td></tr>\n") 
+    
+
 # Updates the attendance for only one event
 def updateAttendance(form_data):
     response = form_data.getfirst("attend")
@@ -165,7 +199,7 @@ def updateAttendance(form_data):
    # print "EID" + str(EID) #debugging
    # print "UID" + str(UID) #debugging
 
-    global curs
+    curs = session.cursor(session.connect())
     msg ="<div class='alert alert-success'>Attendance successfuly changed. "
     if (response == "yes"):
         msg += " You are attending to event number " + EID

@@ -13,26 +13,31 @@ def make_navbar():
     str = cgi_utils_sda.file_contents("navbar.html")
     type = session.getStatus()
     team = session.getTeamName()
-    
-    if type == "m" or type == "c" and team != "None":
+    #TODO if team is deleted, fix header
+
+    if type == "m" or type == "c" and (team != "None" or team != "NULL" or team != None):
         dashboard = "<li><a href='managerDashboard.cgi'>Manage Team: "+team+"</a></li>"
         switch = "<li><a href='viewTeams.cgi'>Switch Team </a></li>"
-    elif type == "p" and team != "None":
+        
+    elif type == "p" and (team != "None" or team != None):
         dashboard = "<li><a href='playerDashboard.cgi'>View Team: "+team+"</a></li>"
         switch = "<li><a href='viewTeams.cgi'>Switch Team </a></li>"
+       
     else:
         dashboard = ""
         switch = ""
-    
-    
-        
+       
 
     #logged status printed so capital L on l abel, lower l on URL
     if logged_status():
         status = "ogout"
+        userdash = "<li><a href='userDashboard.cgi'>My Dashboard</a></li>"
+        settings ="<li><a href='userSettings.cgi'>Settings</a></li>"
     else:
         status = "ogin"
-    return str.format(dashboard=dashboard,status=status,team=team,switch=switch)
+        userdash = ""
+        settings = ""
+    return str.format(userdash=userdash,dashboard=dashboard,status=status,team=team,switch=switch,settings=settings)
 
 def logged_status():
     cookie = cgi_utils_sda.getCookieFromRequest("SESSID")

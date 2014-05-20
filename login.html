@@ -2,20 +2,29 @@
 <body>
   {navbar}
   <div class="container">
-      <p>Please enter your login information
-	<form action="login.cgi" method="get">
-	email: <input type="text" name="email">
-	password <input type="text" name="password">
-	<input type="submit" value="login" name="login">
-	<input type="submit" value="logout" name="logout">
+    
+	<form class="form-inline" role="form" action="login.cgi" method="post">
+	  <div class="form-group">
+	    <label for="email">Email address</label>
+	    <input type="email" class="form-control" name="email" placeholder="Enter email">
+	  </div>
+	  <div class="form-group">
+	    <label for="password">Password</label>
+	    <input type="password" class="form-control" name="password" placeholder="Password">
+	  </div>
+	  <button type="submit" class="btn btn-default" name="login" value="login">Login</button> 
+	 
+  
+  
 	</form>
-	{message}
+	<p class="help-block">Not a member? <a href="createAccount.cgi">Create an account.</a>
 
 	<div>
-	  <p>Not a member? <a href="createAccount.cgi">Create an account.</a>
-	    </div>
+	  {message}
+	</div>
 
-</div>
+
+  </div>
 
 </body>
 </html>

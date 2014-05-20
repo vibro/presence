@@ -10,9 +10,10 @@ import session
 def makeButtons(TID):
     buttons='''
     <p><a class="btn btn-primary btn-lg" href="viewRoster.cgi?TID='''+TID+'''" role="button">Roster</a>
-    <p><a class="btn btn-primary btn-lg" href="viewEvents.cgi?view=team&ID='''+TID+'''" role="button">My Events</a>
+    <p><a class="btn btn-primary btn-lg" href="viewEvents.cgi?view=team" role="button">My Events</a>
     <p><a class="btn btn-primary btn-lg" href="addMember.cgi" role="button">Add Members</a>
     <p><a class="btn btn-primary btn-lg" href="createEvent.cgi" role="button">Create Event</a>
+    <p><a class="btn btn-primary btn-lg" href="teamSettings.cgi" role="button">Team Settings</a>
 '''
     return buttons
 

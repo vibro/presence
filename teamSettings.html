@@ -1,0 +1,56 @@
+<body>
+{navbar}
+<div class="container"> 
+
+<h1>Update Settings</h1>
+ 
+<form class="form-horizontal" role="form" method="POST" action="teamSettings.cgi">
+
+  <fieldset>
+    <legend>Team Info</legend>
+	<div class="panel panel-default">
+	  <div class="panel-body">
+
+	    
+	    <label class="col-sm-2 control-label"> Team Name: </label>
+	    <div class="input-group">
+	      <input type="text" class="form-control" name="name">
+	    </div> <!-- end of input group-->
+
+
+	    <label class="col-sm-2 control-label"> Location: </label>
+	    <div class="input-group">
+	      <input type="text" class="form-control" name="location">
+	    </div>
+	    <label class="col-sm-2 control-lable"></label>
+	    <div class="input-group">
+	      <input type="submit" class="btn btn-default" name="submit" value="submit">  
+	      </div>
+	  </div>
+	  
+	  
+	</div>
+    
+	  
+	  <input type="submit" class="btn btn-danger" name="delete" value="Delete Team">
+	
+	    
+	
+	
+</fieldset>
+
+
+
+
+
+</form>  
+</div> 
+
+<div class="container">
+<br>
+<br>
+  {string}
+</div>
+
+</body>
+</html>
