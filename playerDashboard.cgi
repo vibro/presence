@@ -29,5 +29,4 @@ if __name__ == "__main__":
     TID = session.getTeamFromSession()
     UID = session.getUserFromSession()
     print headerUtils.print_header("Player Dashboard")
-    print render_webpage('playerDash.html',TID,UID)
-    
+    print render_webpage('playerDash.html',TID,UID)   
