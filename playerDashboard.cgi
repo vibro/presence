@@ -12,7 +12,7 @@ def makeButtons(TID,UID):
     buttons='''
     <p><a class="btn btn-primary btn-lg" href="viewRoster.cgi" role="button">Roster</a>
     <p><a class="btn btn-primary btn-lg" href="viewEvents.cgi?view=userteam" role="button">My Team's Events</a>
-    <p><a class="btn btn-primary btn-lg" href="index.html" role="button">Update Player Profile</a>
+    <p><a class="btn btn-primary btn-lg" href="playerProfile.cgi" role="button">Update Player Profile</a>
 '''
     #TODO: CHANGE LAST BUTTON
     return buttons
